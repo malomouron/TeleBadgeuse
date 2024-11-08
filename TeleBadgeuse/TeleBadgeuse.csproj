@@ -30,4 +30,16 @@
 	<Folder Include="ViewModel\" />
   </ItemGroup>
 
+	
+  <ItemGroup>
+    <None Remove="Ressources\Icons\IconDark.png" />
+    <Resource Include="Ressources\Icons\IconDark.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <None Remove="Ressources\Icons\IconLight.png" />
+    <Resource Include="Ressources\Icons\IconLight.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+
 </Project>

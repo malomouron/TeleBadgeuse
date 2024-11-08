@@ -6,6 +6,7 @@ namespace TeleBadgeuse.ViewModel;
 public class MainViewModel : INotifyPropertyChanged
 {
     private bool _darkTheme;
+    private string _imageSource;
 
     public bool DarkTheme
     {
@@ -17,8 +18,32 @@ public class MainViewModel : INotifyPropertyChanged
                 _darkTheme = value;
                 OnPropertyChanged();
                 UpdateTheme();
+                UpdateImageSource();
             }
         }
+    }
+    
+    public string ImageSource
+    {
+        get => _imageSource;
+        set
+        {
+            if (_imageSource != value)
+            {
+                _imageSource = value;
+                OnPropertyChanged();
+            }
+        }
+    }
+    
+    public MainViewModel()
+    {
+        UpdateImageSource();
+    }
+    
+    private void UpdateImageSource()
+    {
+        ImageSource = DarkTheme ? "/Ressources/Icons/IconDark.png" : "/Ressources/Icons/IconLight.png";
     }
 
     // Méthode pour charger le bon thème
