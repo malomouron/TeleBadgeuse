@@ -6,6 +6,28 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>Ressources\Icons\IconLight.ico</ApplicationIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Ressources\Icons\IconDark.ico" />
+    <None Remove="Ressources\Icons\IconLight.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Ressources\Icons\IconDark.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Ressources\Icons\IconLight.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+	
+  <ItemGroup>
+    <Folder Include="Model\" />
+    <Folder Include="View\" />
+	<Folder Include="ViewModel\" />
+  </ItemGroup>
 
 </Project>

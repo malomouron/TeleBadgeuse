@@ -5,8 +5,44 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TeleBadgeuse"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="TéléBadgeuse" Height="450" Width="800"
+        Icon="Ressources/Icons/IconLight.ico"
+        Background="Transparent"
+        WindowStyle="None"
+        AllowsTransparency="True">
 
+
+    <Grid Background="{DynamicResource BackgroundBrush}">
+        <Border  MouseDown="TitleBar_MouseDown" Background="{DynamicResource AccentBrush}" Height="30" VerticalAlignment="Top">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <!-- Colonne pour le titre -->
+                    <ColumnDefinition Width="Auto" />
+                    <!-- Colonne pour les boutons -->
+                </Grid.ColumnDefinitions>
+
+                <!-- Titre dans la première colonne -->
+                <TextBlock Text="TéléBadgeuse" 
+                   Foreground="{DynamicResource ForegroundBrush}" 
+                   VerticalAlignment="Center" 
+                   Margin="10,0"
+                   Grid.Column="0" />
+
+                <!-- Boutons dans la deuxième colonne, alignés à droite -->
+                <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Right">
+                    <Button Content="🗕" Click="Minimize_Click" Width="30" Background="Transparent"/>
+                    <Button Content="🗖" Click="Maximize_Click" Width="30" Background="Transparent"/>
+                    <Button Content="✕" Click="Close_Click" Width="30" Background="Transparent"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <CheckBox Content="Thème Sombre" 
+                  IsChecked="{Binding DarkTheme, Mode=TwoWay}" 
+                  HorizontalAlignment="Center" VerticalAlignment="Top" 
+                  Margin="10"
+                  Foreground="{DynamicResource ForegroundBrush}"/>
+        <Image HorizontalAlignment="Left" Height="100" Margin="186,147,0,0" VerticalAlignment="Top" Width="100" Source="/Ressources/Icons/IconLight.png"/>
     </Grid>
 </Window>
