@@ -3,9 +3,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:TeleBadgeuse"
+        xmlns:teleBadgeuse="clr-namespace:TeleBadgeuse"
+        xmlns:resx="clr-namespace:TeleBadgeuse.Ressources"
         mc:Ignorable="d"
-        Title="TéléBadgeuse" Height="450" Width="800"
+        Title="{x:Static resx:Resource.AppName}" Height="450" Width="800"
         Icon="Ressources/Icons/IconLight.ico"
         Background="Transparent"
         WindowStyle="None"
@@ -25,7 +26,7 @@
                 <!-- Titre dans la première colonne -->
                 <StackPanel VerticalAlignment="Center" Orientation="Horizontal" Margin="15,5" Grid.Column="0">
                     <Image  Height="20" Width="20" Source="{Binding ImageSource, Mode=TwoWay}"/>
-                    <TextBlock Margin="10,5" Text="TéléBadgeuse" 
+                    <TextBlock Margin="10,5" Text="{x:Static resx:Resource.AppName}" 
                                Foreground="{DynamicResource ForegroundBrush}" />
                 </StackPanel>
                 
@@ -37,7 +38,7 @@
                 </StackPanel>
                 
                 
-                <CheckBox Content="Thème Sombre" 
+                <CheckBox Grid.Column="0" Content="{x:Static resx:Resource.AppName}" 
                           IsChecked="{Binding DarkTheme, Mode=TwoWay}" 
                           HorizontalAlignment="Center" VerticalAlignment="Top" 
                           Margin="10"

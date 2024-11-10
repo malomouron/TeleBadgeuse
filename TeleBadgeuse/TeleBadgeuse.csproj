@@ -25,6 +25,7 @@
 
 	
   <ItemGroup>
+    <Folder Include="Converters\" />
     <Folder Include="Model\" />
     <Folder Include="View\" />
 	<Folder Include="ViewModel\" />
@@ -40,6 +41,26 @@
     <Resource Include="Ressources\Icons\IconLight.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
+  </ItemGroup>
+
+	
+  <ItemGroup>
+    <EmbeddedResource Update="Ressources\resx\resx.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>App.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Ressources\resx\resx.en.resx">
+      <DependentUpon>resx.resx</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+
+	
+  <ItemGroup>
+    <Compile Update="Ressources\resx\resx.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>resx.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
 
 </Project>

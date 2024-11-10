@@ -59,8 +59,8 @@ public class MainViewModel : INotifyPropertyChanged
         appResources.Add(new ResourceDictionary { Source = new Uri(theme, UriKind.Relative) });
     }
 
-    public event PropertyChangedEventHandler PropertyChanged;
-    protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+    public event PropertyChangedEventHandler? PropertyChanged;
+    protected void OnPropertyChanged([CallerMemberName] string? propertyName = null)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
