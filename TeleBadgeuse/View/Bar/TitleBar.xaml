@@ -1,7 +1,7 @@
 ﻿<UserControl x:Class="TeleBadgeuse.TitleBar"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <Border  MouseDown="TitleBar_MouseDown" Background="{DynamicResource AccentBrush}" Height="40" VerticalAlignment="Top">
+    <Border  MouseDown="TitleBar_MouseDown" Background="{DynamicResource BackgroundBrushBis}" Height="40" VerticalAlignment="Top">
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />

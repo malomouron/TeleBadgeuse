@@ -10,10 +10,19 @@
         WindowStyle="None"
         AllowsTransparency="True">
     <Grid Background="{DynamicResource BackgroundBrush}">
-        <teleBadgeuse:TitleBar />
-        <ComboBox x:Name="LanguageComboBox" SelectionChanged="LanguageComboBox_SelectionChanged" HorizontalAlignment="Left" Margin="146,152,0,0" VerticalAlignment="Top" Width="120">
-            <ComboBoxItem Content="{DynamicResource LangFr}"/>
-            <ComboBoxItem Content="{DynamicResource LangEn}"/>
-        </ComboBox>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="10*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="1.5*"/>
+            <ColumnDefinition Width="12*"/>
+        </Grid.ColumnDefinitions>
+
+        <teleBadgeuse:TitleBar Grid.ColumnSpan="3" Grid.Row="0" />
+    
+        <teleBadgeuse:LeftNavBar  Grid.Column="0" Grid.Row="1" />
+        <Frame x:Name="MainFrame" Grid.Column="2" Grid.Row="1" Navigated="MainFrame_Navigated" NavigationUIVisibility="Hidden"/>
     </Grid>
 </Window>

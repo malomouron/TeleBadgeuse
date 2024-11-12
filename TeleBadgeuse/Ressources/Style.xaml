@@ -1,0 +1,45 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
+    <Style x:Key="ButtonLeftNavBar">
+        <Setter Property="Button.Background" Value="Transparent"/>
+        <Setter Property="Button.BorderBrush" Value="Transparent"/>
+        <Setter Property="Button.BorderThickness" Value="0"/>
+        <Setter Property="Button.Margin" Value="0 7"/>
+        <Setter Property="Button.Width" Value="40"/>
+        <Setter Property="Button.Height" Value="40"/>
+        <Setter Property="Button.Cursor" Value="Hand" />
+
+        <!-- Effet de survol -->
+        <Setter Property="Button.Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="100">
+                        <Grid>
+                            <!-- Contenu du bouton (icône) -->
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Grid>
+                    </Border>
+                    
+                    <!-- Animations pour le survol et l'état de pression -->
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#66DDDDDD" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Background" Value="#66CCCCCC" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+    </Style>
+    <Style x:Key="PackIconStyle" TargetType="materialDesign:PackIcon">
+        <Setter Property="Width" Value="30"/>
+        <Setter Property="Height" Value="30"/>
+    </Style>
+</ResourceDictionary>
