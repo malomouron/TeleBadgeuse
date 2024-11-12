@@ -49,14 +49,9 @@ public class MainViewModel : INotifyPropertyChanged
     // Méthode pour charger le bon thème
     private void UpdateTheme()
     {
-        var appResources = Application.Current.Resources.MergedDictionaries;
-
-        // Effacer le thème actuel
-        appResources.Clear();
-
         // Charger le thème sombre ou clair en fonction de DarkTheme
-        string theme = _darkTheme ? "Ressources/Themes/DarkTheme.xaml" : "Ressources/Themes/LightTheme.xaml";
-        appResources.Add(new ResourceDictionary { Source = new Uri(theme, UriKind.Relative) });
+        string theme = _darkTheme ? "DarkTheme" : "LightTheme";
+        Ressources.ResourceDictionaryManager.SetTheme(theme);
     }
 
     public event PropertyChangedEventHandler? PropertyChanged;
