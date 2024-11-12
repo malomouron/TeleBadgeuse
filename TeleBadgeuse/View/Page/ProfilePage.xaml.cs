@@ -1,8 +1,6 @@
-﻿using System.Windows.Controls;
+﻿namespace TeleBadgeuse;
 
-namespace TeleBadgeuse;
-
-public partial class ProfilePage : Page
+public partial class ProfilePage
 {
     public ProfilePage()
     {

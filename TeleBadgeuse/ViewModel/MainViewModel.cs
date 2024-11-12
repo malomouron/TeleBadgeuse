@@ -1,62 +1,115 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Windows;
-namespace TeleBadgeuse.ViewModel;
 
-public class MainViewModel : INotifyPropertyChanged
+namespace TeleBadgeuse.ViewModel
 {
-    private bool _darkTheme;
-    private string _imageSource;
-
-    public bool DarkTheme
+    /// <summary>
+    /// ViewModel principal de l'application.
+    /// </summary>
+    public class MainViewModel : INotifyPropertyChanged
     {
-        get => _darkTheme;
-        set
+        #region Attributs
+
+        /// <summary>
+        /// Indique si le thème sombre est activé.
+        /// </summary>
+        private bool _darkTheme;
+
+        /// <summary>
+        /// Source de l'image actuelle.
+        /// </summary>
+        private string _imageSource = null!;
+
+        #endregion
+
+        #region Propriétés
+
+        /// <summary>
+        /// Obtient ou définit une valeur indiquant si le thème sombre est activé.
+        /// </summary>
+        public bool DarkTheme
         {
-            if (_darkTheme != value)
+            get => _darkTheme;
+            set
             {
-                _darkTheme = value;
-                OnPropertyChanged();
-                UpdateTheme();
-                UpdateImageSource();
+                if (_darkTheme != value)
+                {
+                    _darkTheme = value;
+                    OnPropertyChanged();
+                    UpdateTheme();
+                    UpdateImageSource();
+                }
             }
         }
-    }
-    
-    public string ImageSource
-    {
-        get => _imageSource;
-        set
+
+        /// <summary>
+        /// Obtient ou définit la source de l'image actuelle.
+        /// </summary>
+        public string ImageSource
         {
-            if (_imageSource != value)
+            get => _imageSource;
+            set
             {
-                _imageSource = value;
-                OnPropertyChanged();
+                if (_imageSource != value)
+                {
+                    _imageSource = value;
+                    OnPropertyChanged();
+                }
             }
         }
-    }
-    
-    public MainViewModel()
-    {
-        UpdateImageSource();
-    }
-    
-    private void UpdateImageSource()
-    {
-        ImageSource = DarkTheme ? "/Ressources/Icons/IconDark.png" : "/Ressources/Icons/IconLight.png";
-    }
 
-    // Méthode pour charger le bon thème
-    private void UpdateTheme()
-    {
-        // Charger le thème sombre ou clair en fonction de DarkTheme
-        string theme = _darkTheme ? "DarkTheme" : "LightTheme";
-        Ressources.ResourceDictionaryManager.SetTheme(theme);
-    }
+        #endregion
 
-    public event PropertyChangedEventHandler? PropertyChanged;
-    protected void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        #region Constructeur
+
+        /// <summary>
+        /// Initialise une nouvelle instance de la classe <see cref="MainViewModel"/>.
+        /// </summary>
+        public MainViewModel()
+        {
+            UpdateImageSource();
+        }
+
+        #endregion
+
+        #region Méthodes
+
+        /// <summary>
+        /// Met à jour la source de l'image en fonction du thème actuel.
+        /// </summary>
+        private void UpdateImageSource()
+        {
+            ImageSource = DarkTheme ? "/Ressources/Icons/IconDark.png" : "/Ressources/Icons/IconLight.png";
+        }
+
+        /// <summary>
+        /// Met à jour le thème de l'application.
+        /// </summary>
+        private void UpdateTheme()
+        {
+            // Charger le thème sombre ou clair en fonction de DarkTheme
+            string theme = _darkTheme ? "DarkTheme" : "LightTheme";
+            Ressources.ResourceDictionaryManager.SetTheme(theme);
+        }
+
+        /// <summary>
+        /// Déclenche l'événement PropertyChanged.
+        /// </summary>
+        /// <param name="propertyName">Nom de la propriété modifiée.</param>
+        protected void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        #endregion
+
+        #region Événements
+
+        /// <summary>
+        /// Se produit lorsqu'une propriété de l'objet change.
+        /// </summary>
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        #endregion
     }
 }

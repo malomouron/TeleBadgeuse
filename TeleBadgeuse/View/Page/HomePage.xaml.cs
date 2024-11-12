@@ -1,8 +1,6 @@
-﻿using System.Windows.Controls;
+﻿namespace TeleBadgeuse;
 
-namespace TeleBadgeuse;
-
-public partial class HomePage : Page
+public partial class HomePage
 {
     public HomePage()
     {

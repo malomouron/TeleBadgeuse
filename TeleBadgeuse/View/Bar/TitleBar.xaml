@@ -23,13 +23,6 @@
                 <Button Content="🗖" Click="Maximize_Click" Width="30" Background="Transparent"/>
                 <Button Content="✕" Click="Close_Click" Width="30" Background="Transparent"/>
             </StackPanel>
-                
-                
-            <CheckBox Grid.Column="0" Content="{DynamicResource DarkTheme}" 
-                      IsChecked="{Binding DarkTheme, Mode=TwoWay}" 
-                      HorizontalAlignment="Center" VerticalAlignment="Top" 
-                      Margin="10"
-                      Foreground="{DynamicResource ForegroundBrush}"/>
         </Grid>
     </Border>
 </UserControl>
