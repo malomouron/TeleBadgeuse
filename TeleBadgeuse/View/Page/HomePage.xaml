@@ -2,7 +2,10 @@
 <Page x:Class="TeleBadgeuse.HomePage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Page.Resources>
+        <ResourceDictionary Source="pack://application:,,,/Ressources/Style.xaml" />
+    </Page.Resources>
     <Grid>
-        <TextBlock Text="Home Page" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        <TextBlock x:Name="CurrentTimeTextBlock" VerticalAlignment="Center" Style="{StaticResource HoursText}" Foreground="{DynamicResource ForegroundBrush}" HorizontalAlignment="Center"/>
     </Grid>
 </Page>

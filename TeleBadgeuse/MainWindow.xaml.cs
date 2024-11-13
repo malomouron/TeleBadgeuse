@@ -47,6 +47,7 @@ namespace TeleBadgeuse
 
             ResourceDictionaryManager.SetCulture("fr");
             ResourceDictionaryManager.SetTheme("LightTheme");
+            MainFrame.Source = new Uri("/View/Page/HomePage.xaml", UriKind.Relative);
         }
 
         #endregion
