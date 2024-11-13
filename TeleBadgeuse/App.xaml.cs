@@ -1,14 +1,8 @@
-﻿using System.Configuration;
-using System.Data;
-using System.Windows;
-
-namespace TeleBadgeuse
+﻿namespace TeleBadgeuse
 {
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>
-    public partial class App : Application
-    {
-    }
+    public partial class App;
 
 }

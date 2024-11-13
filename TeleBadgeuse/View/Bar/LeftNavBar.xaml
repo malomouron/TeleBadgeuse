@@ -1,0 +1,38 @@
+﻿<UserControl x:Class="TeleBadgeuse.LeftNavBar"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d">  
+    <Grid>
+        <ScrollViewer VerticalScrollBarVisibility="Auto" Background="{DynamicResource AccentBrush}">
+            <StackPanel>
+                <Button x:Name="ButtonHome" Style="{StaticResource ButtonLeftNavBarTiny}" Click="HomeButton_Click">
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Home" Style="{StaticResource PackIconStyle}" Foreground="{DynamicResource AccentBrushForeground }" />
+                            <Label x:Name="HomeLabel" Content="{DynamicResource Home}" Visibility="Collapsed" Foreground="{DynamicResource AccentBrushForeground}"/>
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+                <Button x:Name="ButtonProfil" Style="{StaticResource ButtonLeftNavBarTiny}" Click="ProfileButton_Click">
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="People" Style="{StaticResource PackIconStyle}" Foreground="{DynamicResource AccentBrushForeground }" />
+                            <Label x:Name="ProfileLabel" Content="{DynamicResource Profile}" Visibility="Collapsed" Foreground="{DynamicResource AccentBrushForeground}"/>
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+                <Button x:Name="ButtonSettings" Style="{StaticResource ButtonLeftNavBarTiny}" Click="SettingsButton_Click">
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Settings" Style="{StaticResource PackIconStyle}" Foreground="{DynamicResource AccentBrushForeground }" />
+                            <Label x:Name="SettingsLabel" Content="{DynamicResource Settings}" Visibility="Collapsed" Foreground="{DynamicResource AccentBrushForeground}"/>
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

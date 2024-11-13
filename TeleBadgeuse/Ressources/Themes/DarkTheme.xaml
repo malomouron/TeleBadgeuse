@@ -1,0 +1,30 @@
+﻿<!-- DarkTheme.xaml -->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!-- Couleurs -->
+    <Color x:Key="BackgroundColor">#475465</Color>
+    <Color x:Key="ForegroundColor">#EEEDFF</Color>
+    <Color x:Key="AccentColor">#FF584D</Color>
+    <Color x:Key="BackgroundColorBis">#556C96</Color>
+    <Color x:Key="ForegroundColorBis">#B6CDE8</Color>
+
+    <!-- Brosse pour les fonds et les polices -->
+    <SolidColorBrush x:Key="BackgroundBrush" Color="{StaticResource BackgroundColor}" />
+    <SolidColorBrush x:Key="BackgroundBrushBis" Color="{StaticResource BackgroundColorBis}" />
+    <SolidColorBrush x:Key="ForegroundBrush" Color="{StaticResource ForegroundColor}" />
+    <SolidColorBrush x:Key="ForegroundBrushBis" Color="{StaticResource ForegroundColorBis}" />
+    <SolidColorBrush x:Key="AccentBrush" Color="{StaticResource AccentColor}" />
+    <SolidColorBrush x:Key="AccentBrushForeground" Color="{StaticResource ForegroundColor}" />
+
+    <!-- Style global pour les fenêtres -->
+    <Style TargetType="Window">
+        <Setter Property="Background" Value="{StaticResource BackgroundBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource ForegroundBrush}" />
+    </Style>
+
+    <!-- Style global pour les boutons -->
+    <Style TargetType="Button">
+        <Setter Property="Background" Value="{StaticResource AccentBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource ForegroundBrush}" />
+    </Style>
+</ResourceDictionary>

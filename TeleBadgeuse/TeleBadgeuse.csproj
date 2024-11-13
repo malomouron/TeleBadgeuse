@@ -6,6 +6,77 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>Ressources\Icons\IconLight.ico</ApplicationIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Ressources\Icons\IconDark.ico" />
+    <None Remove="Ressources\Icons\IconLight.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Ressources\Icons\IconDark.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Ressources\Icons\IconLight.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+	
+  <ItemGroup>
+    <Folder Include="Model\" />
+  </ItemGroup>
+
+	
+  <ItemGroup>
+    <None Remove="Ressources\Icons\IconDark.png" />
+    <Resource Include="Ressources\Icons\IconDark.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <None Remove="Ressources\Icons\IconLight.png" />
+    <Resource Include="Ressources\Icons\IconLight.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+
+	
+  <ItemGroup>
+    <EmbeddedResource Update="Ressources\resx\resx.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>App.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Ressources\resx\resx.en.resx">
+      <DependentUpon>resx.resx</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+
+	
+  <ItemGroup>
+    <Compile Update="Ressources\resx\resx.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>resx.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+	
+  <ItemGroup>
+    <PackageReference Include="MaterialDesignThemes" Version="5.1.1-ci795" />
+  </ItemGroup>
+
+	
+  <ItemGroup>
+    <Page Update="View\Bar\LeftNavBar.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <XamlRuntime>Wpf</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\Bar\TitleBar.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <XamlRuntime>Wpf</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
 
 </Project>
