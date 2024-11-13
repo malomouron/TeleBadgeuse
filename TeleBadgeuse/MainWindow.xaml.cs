@@ -1,5 +1,8 @@
-﻿using System.Windows.Media.Imaging;
+﻿using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
+using MaterialDesignThemes.Wpf;
 using TeleBadgeuse.ViewModel;
 using TeleBadgeuse.Ressources;
 
@@ -16,6 +19,11 @@ namespace TeleBadgeuse
         /// ViewModel principal de l'application.
         /// </summary>
         private static MainViewModel _viewModel = null!;
+
+        /// <summary>
+        /// Indique si le bouton de navigation est activé.
+        /// </summary>
+        private bool _isToggled = false;
 
         #endregion
 
@@ -68,6 +76,34 @@ namespace TeleBadgeuse
             }
         }
 
+        private void ToggleButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (_isToggled)
+            {
+                // Revert to initial state
+                MainFrame.SetValue(Grid.ColumnSpanProperty, 2);
+                MainFrame.SetValue(Grid.ColumnProperty, 1);
+                LeftNavBar.SetValue(Grid.ColumnSpanProperty, 1);
+                BigNav.SetValue(Grid.ColumnProperty, 1);
+                IconChevron.Kind = (PackIconKind)Enum
+                    .Parse(typeof(PackIconKind), "ChevronRight");
+
+            }
+            else
+            {
+                // Toggle to new state
+                MainFrame.SetValue(Grid.ColumnSpanProperty, 1);
+                MainFrame.SetValue(Grid.ColumnProperty, 2);
+                LeftNavBar.SetValue(Grid.ColumnSpanProperty, 2);
+                BigNav.SetValue(Grid.ColumnProperty, 2);
+                IconChevron.Kind = (PackIconKind)Enum
+                    .Parse(typeof(PackIconKind), "ChevronLeft");
+            }
+
+            _isToggled = !_isToggled;
+        }
+        
         #endregion
+
     }
 }
