@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows.Media.Imaging;
 
 namespace TeleBadgeuse.ViewModel
 {
@@ -19,6 +20,7 @@ namespace TeleBadgeuse.ViewModel
         /// Source de l'image actuelle.
         /// </summary>
         private string _imageSource = null!;
+        private BitmapImage _icon;
 
         #endregion
 
@@ -38,6 +40,7 @@ namespace TeleBadgeuse.ViewModel
                     OnPropertyChanged();
                     UpdateTheme();
                     UpdateImageSource();
+                    UpdateIcon();
                 }
             }
         }
@@ -57,6 +60,20 @@ namespace TeleBadgeuse.ViewModel
                 }
             }
         }
+        
+        
+        public BitmapImage Icon
+        {
+            get => _icon;
+            set
+            {
+                if (_icon != value)
+                {
+                    _icon = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
         #endregion
 
@@ -68,6 +85,7 @@ namespace TeleBadgeuse.ViewModel
         public MainViewModel()
         {
             UpdateImageSource();
+            UpdateIcon();
         }
 
         #endregion
@@ -80,6 +98,11 @@ namespace TeleBadgeuse.ViewModel
         private void UpdateImageSource()
         {
             ImageSource = DarkTheme ? "/Ressources/Icons/IconDark.png" : "/Ressources/Icons/IconLight.png";
+        }
+        
+        private void UpdateIcon()
+        {
+            Icon = DarkTheme ? new BitmapImage(new Uri("pack://application:,,,/Ressources/Icons/IconDark.ico")) : new BitmapImage(new Uri("pack://application:,,,/Ressources/Icons/IconLight.ico"));
         }
 
         /// <summary>

@@ -25,11 +25,6 @@
 
 	
   <ItemGroup>
-    <Folder Include="Model\" />
-  </ItemGroup>
-
-	
-  <ItemGroup>
     <None Remove="Ressources\Icons\IconDark.png" />
     <Resource Include="Ressources\Icons\IconDark.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -62,7 +57,9 @@
 
 	
   <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0-preview1" />
     <PackageReference Include="MaterialDesignThemes" Version="5.1.1-ci795" />
+    <PackageReference Include="System.Data.SQLite" Version="1.0.119" />
   </ItemGroup>
 
 	

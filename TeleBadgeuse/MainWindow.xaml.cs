@@ -1,9 +1,12 @@
 ﻿using System.Collections;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using MaterialDesignThemes.Wpf;
+using TeleBadgeuse.Data;
+using TeleBadgeuse.Model;
 using TeleBadgeuse.ViewModel;
 using TeleBadgeuse.Ressources;
 
@@ -20,6 +23,10 @@ namespace TeleBadgeuse
         /// ViewModel principal de l'application.
         /// </summary>
         private static MainViewModel _viewModel = null!;
+        
+        private SettingsViewModel _settingsViewModel = null!;
+        
+        private const string dbPath = "Data Source=./data.db";
 
         /// <summary>
         /// Indique si le bouton de navigation est activé.
@@ -38,6 +45,12 @@ namespace TeleBadgeuse
             get => _viewModel;
             private set => _viewModel = value;
         }
+        
+        public SettingsViewModel SettingsViewModel
+        {
+            get => _settingsViewModel;
+            private set => _settingsViewModel = value;
+        }
 
         #endregion
 
@@ -49,19 +62,42 @@ namespace TeleBadgeuse
         public MainWindow()
         {
             InitializeComponent();
-            this.Icon = new BitmapImage(new Uri("pack://application:,,,/Ressources/Icons/IconLight.ico"));
 
+            
+            SettingsViewModel = new SettingsViewModel(new SettingsService(dbPath));
+            
             ViewModel = new MainViewModel();
             DataContext = ViewModel;
+            
 
-            ResourceDictionaryManager.SetCulture("fr");
-            ResourceDictionaryManager.SetTheme("LightTheme");
-            MainFrame.Source = new Uri("/View/Page/HomePage.xaml", UriKind.Relative);
+            InitSettings();
+            InitMainWindow();
         }
 
         #endregion
 
         #region Méthodes
+        
+        private void InitMainWindow()
+        {
+            this.SetBinding(IconProperty, new Binding("Icon") { Source = ViewModel });
+
+            ResourceDictionaryManager.SetCulture("fr");
+            ResourceDictionaryManager.SetTheme(SettingsViewModel.SelectSettingsKey("Theme").First().Value);
+            MainFrame.Source = new Uri(SettingsViewModel.SelectSettingsKey("DefaultPage").First().Value, UriKind.Relative);
+        }
+        
+        private void InitSettings()
+        {
+            if (SettingsViewModel.SelectSettingsKey("Theme").Count() == 0)
+            {
+                SettingsViewModel.AddSettingsCommand.Execute(("Theme", "DarkTheme"));
+            }
+            if (SettingsViewModel.SelectSettingsKey("DefaultPage").Count() == 0)
+            {
+                SettingsViewModel.AddSettingsCommand.Execute(("DefaultPage", "/View/Page/HomePage.xaml"));
+            }
+        }
 
         /// <summary>
         /// Gère l'événement de navigation du MainFrame.

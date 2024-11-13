@@ -12,7 +12,7 @@
 
             <!-- Titre dans la première colonne -->
             <StackPanel VerticalAlignment="Center" Orientation="Horizontal" Margin="15,5" Grid.Column="0">
-                <Image  Height="20" Width="20" Source="{Binding ImageSource, Mode=TwoWay}"/>
+                <Image  Height="20" Width="20" Source="{Binding ImageSource}"/>
                 <TextBlock Margin="10,5" Text="{DynamicResource AppName}" 
                            Foreground="{DynamicResource ForegroundBrush}" />
             </StackPanel>
