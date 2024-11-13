@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Collections;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
@@ -78,6 +79,10 @@ namespace TeleBadgeuse
 
         private void ToggleButton_Click(object sender, RoutedEventArgs e)
         {
+            ResourceDictionary resource = new ResourceDictionary
+            {
+                Source = new Uri("pack://application:,,,/Ressources/Style.xaml")
+            };
             if (_isToggled)
             {
                 // Revert to initial state
@@ -87,7 +92,8 @@ namespace TeleBadgeuse
                 BigNav.SetValue(Grid.ColumnProperty, 1);
                 IconChevron.Kind = (PackIconKind)Enum
                     .Parse(typeof(PackIconKind), "ChevronRight");
-
+                LeftNavBar.ToggleLabelsVisibility(false);
+                LeftNavBar.ToggleButtonStyles((Style)resource["ButtonLeftNavBarTiny"]);
             }
             else
             {
@@ -98,6 +104,8 @@ namespace TeleBadgeuse
                 BigNav.SetValue(Grid.ColumnProperty, 2);
                 IconChevron.Kind = (PackIconKind)Enum
                     .Parse(typeof(PackIconKind), "ChevronLeft");
+                LeftNavBar.ToggleLabelsVisibility(true);
+                LeftNavBar.ToggleButtonStyles((Style)resource["ButtonLeftNavBarBig"]);
             }
 
             _isToggled = !_isToggled;

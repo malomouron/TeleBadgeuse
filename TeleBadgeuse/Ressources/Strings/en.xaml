@@ -5,4 +5,7 @@
     <sys:String x:Key="DarkTheme">Dark theme</sys:String>
     <sys:String x:Key="LangEn">English</sys:String>
     <sys:String x:Key="LangFr">French</sys:String>
+    <sys:String x:Key="Home">Home</sys:String>
+    <sys:String x:Key="Profile">Profile</sys:String>
+    <sys:String x:Key="Settings">Settings</sys:String>
 </ResourceDictionary>

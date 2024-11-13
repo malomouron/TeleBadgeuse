@@ -51,6 +51,19 @@ namespace TeleBadgeuse
             ((MainWindow)Application.Current.MainWindow).MainFrame.Source = new Uri("/View/Page/SettingsPage.xaml", UriKind.Relative);
         }
 
+        public void ToggleButtonStyles(Style style)
+        {
+            ButtonHome.Style = style;
+            ButtonProfil.Style = style;
+            ButtonSettings.Style = style;
+        }
+        public void ToggleLabelsVisibility(bool isVisible)
+        {
+            var visibility = isVisible ? Visibility.Visible : Visibility.Collapsed;
+            HomeLabel.Visibility = visibility;
+            ProfileLabel.Visibility = visibility;
+            SettingsLabel.Visibility = visibility;
+        }
         #endregion
     }
 }

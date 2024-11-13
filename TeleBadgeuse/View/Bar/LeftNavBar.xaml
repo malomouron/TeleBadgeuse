@@ -8,20 +8,28 @@
     <Grid>
         <ScrollViewer VerticalScrollBarVisibility="Auto" Background="{DynamicResource AccentBrush}">
             <StackPanel>
-
-                <Button Style="{StaticResource ButtonLeftNavBar}" Click="HomeButton_Click">
+                <Button x:Name="ButtonHome" Style="{StaticResource ButtonLeftNavBarTiny}" Click="HomeButton_Click">
                     <Button.Content>
-                        <materialDesign:PackIcon Kind="Home" Style="{StaticResource PackIconStyle}" Foreground="{DynamicResource AccentBrushForeground }" />
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Home" Style="{StaticResource PackIconStyle}" Foreground="{DynamicResource AccentBrushForeground }" />
+                            <Label x:Name="HomeLabel" Content="{DynamicResource Home}" Visibility="Collapsed" Foreground="{DynamicResource AccentBrushForeground}"/>
+                        </StackPanel>
                     </Button.Content>
                 </Button>
-                <Button Style="{StaticResource ButtonLeftNavBar}" Click="ProfileButton_Click">
+                <Button x:Name="ButtonProfil" Style="{StaticResource ButtonLeftNavBarTiny}" Click="ProfileButton_Click">
                     <Button.Content>
-                        <materialDesign:PackIcon Kind="People" Style="{StaticResource PackIconStyle}" Foreground="{DynamicResource AccentBrushForeground }" />
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="People" Style="{StaticResource PackIconStyle}" Foreground="{DynamicResource AccentBrushForeground }" />
+                            <Label x:Name="ProfileLabel" Content="{DynamicResource Profile}" Visibility="Collapsed" Foreground="{DynamicResource AccentBrushForeground}"/>
+                        </StackPanel>
                     </Button.Content>
                 </Button>
-                <Button Style="{StaticResource ButtonLeftNavBar}" Click="SettingsButton_Click">
+                <Button x:Name="ButtonSettings" Style="{StaticResource ButtonLeftNavBarTiny}" Click="SettingsButton_Click">
                     <Button.Content>
-                        <materialDesign:PackIcon Kind="Settings" Style="{StaticResource PackIconStyle}" Foreground="{DynamicResource AccentBrushForeground }" />
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Settings" Style="{StaticResource PackIconStyle}" Foreground="{DynamicResource AccentBrushForeground }" />
+                            <Label x:Name="SettingsLabel" Content="{DynamicResource Settings}" Visibility="Collapsed" Foreground="{DynamicResource AccentBrushForeground}"/>
+                        </StackPanel>
                     </Button.Content>
                 </Button>
             </StackPanel>
