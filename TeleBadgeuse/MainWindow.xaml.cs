@@ -66,7 +66,7 @@ namespace TeleBadgeuse
             
             SettingsViewModel = new SettingsViewModel(new SettingsService(dbPath));
             
-            ViewModel = new MainViewModel();
+            ViewModel = new MainViewModel(SettingsViewModel.SelectSettingsKey("Theme").First().Value == "DarkTheme");
             DataContext = ViewModel;
             
 
@@ -82,7 +82,7 @@ namespace TeleBadgeuse
         {
             this.SetBinding(IconProperty, new Binding("Icon") { Source = ViewModel });
 
-            ResourceDictionaryManager.SetCulture("fr");
+            ResourceDictionaryManager.SetCulture(SettingsViewModel.SelectSettingsKey("Language").First().Value);
             ResourceDictionaryManager.SetTheme(SettingsViewModel.SelectSettingsKey("Theme").First().Value);
             MainFrame.Source = new Uri(SettingsViewModel.SelectSettingsKey("DefaultPage").First().Value, UriKind.Relative);
         }
@@ -96,6 +96,10 @@ namespace TeleBadgeuse
             if (SettingsViewModel.SelectSettingsKey("DefaultPage").Count() == 0)
             {
                 SettingsViewModel.AddSettingsCommand.Execute(("DefaultPage", "/View/Page/HomePage.xaml"));
+            }
+            if (SettingsViewModel.SelectSettingsKey("Language").Count() == 0)
+            {
+                SettingsViewModel.AddSettingsCommand.Execute(("Language", "en"));
             }
         }
 

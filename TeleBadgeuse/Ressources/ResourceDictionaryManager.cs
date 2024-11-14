@@ -12,12 +12,12 @@ namespace TeleBadgeuse.Ressources
         /// <summary>
         /// Culture actuelle de l'application.
         /// </summary>
-        private static string _currentCulture = "fr";
+        private static string _currentCulture ;
 
         /// <summary>
         /// Thème actuel de l'application.
         /// </summary>
-        private static string _currentTheme = "LightTheme";
+        private static string _currentTheme = "DarkTheme";
 
         #endregion
 

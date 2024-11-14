@@ -21,6 +21,14 @@
     <Content Include="Ressources\Icons\IconLight.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Remove="Ressources\Icons\IconLightFull.ico" />
+    <Content Include="Ressources\Icons\IconLightFull.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Remove="Ressources\Icons\IconDarkFull.ico" />
+    <Content Include="Ressources\Icons\IconDarkFull.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 	

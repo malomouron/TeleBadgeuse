@@ -82,8 +82,9 @@ namespace TeleBadgeuse.ViewModel
         /// <summary>
         /// Initialise une nouvelle instance de la classe <see cref="MainViewModel"/>.
         /// </summary>
-        public MainViewModel()
+        public MainViewModel(bool darkTheme)
         {
+            _darkTheme = darkTheme;
             UpdateImageSource();
             UpdateIcon();
         }
@@ -102,7 +103,7 @@ namespace TeleBadgeuse.ViewModel
         
         private void UpdateIcon()
         {
-            Icon = DarkTheme ? new BitmapImage(new Uri("pack://application:,,,/Ressources/Icons/IconDark.ico")) : new BitmapImage(new Uri("pack://application:,,,/Ressources/Icons/IconLight.ico"));
+            Icon = DarkTheme ? new BitmapImage(new Uri("pack://application:,,,/Ressources/Icons/IconDarkFull.ico")) : new BitmapImage(new Uri("pack://application:,,,/Ressources/Icons/IconLightFull.ico"));
         }
 
         /// <summary>
