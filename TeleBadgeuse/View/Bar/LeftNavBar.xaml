@@ -6,7 +6,7 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d">  
     <Grid>
-        <ScrollViewer VerticalScrollBarVisibility="Auto" Background="{DynamicResource AccentBrush}">
+        <ScrollViewer VerticalScrollBarVisibility="Auto" Background="{StaticResource AccentBrush}">
             <StackPanel>
                 <Button x:Name="ButtonHome" Style="{StaticResource ButtonLeftNavBarTiny}" Click="HomeButton_Click">
                     <Button.Content>

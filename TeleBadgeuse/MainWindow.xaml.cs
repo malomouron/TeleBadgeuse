@@ -1,13 +1,9 @@
-﻿using System.Collections;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using MaterialDesignThemes.Wpf;
 using TeleBadgeuse.Data;
-using TeleBadgeuse.Model;
-using TeleBadgeuse.ViewModel;
 using TeleBadgeuse.Ressources;
 
 namespace TeleBadgeuse
@@ -18,39 +14,10 @@ namespace TeleBadgeuse
     public partial class MainWindow
     {
         #region Attributs
-
-        /// <summary>
-        /// ViewModel principal de l'application.
-        /// </summary>
-        private static MainViewModel _viewModel = null!;
-        
-        private SettingsViewModel _settingsViewModel = null!;
-        
-        private const string dbPath = "Data Source=./data.db";
-
         /// <summary>
         /// Indique si le bouton de navigation est activé.
         /// </summary>
         private bool _isToggled = false;
-
-        #endregion
-
-        #region Propriétés
-
-        /// <summary>
-        /// Obtient le ViewModel principal de l'application.
-        /// </summary>
-        public static MainViewModel ViewModel
-        {
-            get => _viewModel;
-            private set => _viewModel = value;
-        }
-        
-        public SettingsViewModel SettingsViewModel
-        {
-            get => _settingsViewModel;
-            private set => _settingsViewModel = value;
-        }
 
         #endregion
 
@@ -63,15 +30,19 @@ namespace TeleBadgeuse
         {
             InitializeComponent();
 
-            
-            SettingsViewModel = new SettingsViewModel(new SettingsService(dbPath));
-            
-            ViewModel = new MainViewModel(SettingsViewModel.SelectSettingsKey("Theme").First().Value == "DarkTheme");
-            DataContext = ViewModel;
+            new SettingsPage(); // Initialize settings
             
 
             InitSettings();
             InitMainWindow();
+
+            DataContext = SettingsPage.SettingsViewModel;
+            
+            //display settings
+            foreach (Settings settings in SettingsPage.SettingsViewModel.Settings)
+            {
+                Console.WriteLine(settings.Key + " : " + settings.Value);
+            }
         }
 
         #endregion
@@ -80,26 +51,26 @@ namespace TeleBadgeuse
         
         private void InitMainWindow()
         {
-            this.SetBinding(IconProperty, new Binding("Icon") { Source = ViewModel });
+            this.SetBinding(IconProperty, new Binding("Icon") { Source = SettingsPage.SettingsViewModel });
 
-            ResourceDictionaryManager.SetCulture(SettingsViewModel.SelectSettingsKey("Language").First().Value);
-            ResourceDictionaryManager.SetTheme(SettingsViewModel.SelectSettingsKey("Theme").First().Value);
-            MainFrame.Source = new Uri(SettingsViewModel.SelectSettingsKey("DefaultPage").First().Value, UriKind.Relative);
+            ResourceDictionaryManager.SetCulture(SettingsPage.SettingsViewModel.SelectSettingsKey("Language").Value);
+            ResourceDictionaryManager.SetTheme(SettingsPage.SettingsViewModel.SelectSettingsKey("Theme").Value);
+            MainFrame.Source = new Uri(SettingsPage.SettingsViewModel.SelectSettingsKey("DefaultPage").Value, UriKind.Relative);
         }
         
         private void InitSettings()
         {
-            if (SettingsViewModel.SelectSettingsKey("Theme").Count() == 0)
+            if (SettingsPage.SettingsViewModel.SelectSettingsKey("Theme") == null)
             {
-                SettingsViewModel.AddSettingsCommand.Execute(("Theme", "DarkTheme"));
+                SettingsPage.SettingsViewModel.AddSettingsCommand.Execute(("Theme", "DarkTheme"));
             }
-            if (SettingsViewModel.SelectSettingsKey("DefaultPage").Count() == 0)
+            if (SettingsPage.SettingsViewModel.SelectSettingsKey("DefaultPage") == null)
             {
-                SettingsViewModel.AddSettingsCommand.Execute(("DefaultPage", "/View/Page/HomePage.xaml"));
+                SettingsPage.SettingsViewModel.AddSettingsCommand.Execute(("DefaultPage", "/View/Page/HomePage.xaml"));
             }
-            if (SettingsViewModel.SelectSettingsKey("Language").Count() == 0)
+            if (SettingsPage.SettingsViewModel.SelectSettingsKey("Language") == null)
             {
-                SettingsViewModel.AddSettingsCommand.Execute(("Language", "en"));
+                SettingsPage.SettingsViewModel.AddSettingsCommand.Execute(("Language", "fr"));
             }
         }
 

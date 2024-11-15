@@ -22,8 +22,7 @@ public class SettingsService : ISettingsService
             command.CommandText = """
                                   
                                                   CREATE TABLE IF NOT EXISTS Settings (
-                                                      Id INTEGER PRIMARY KEY AUTOINCREMENT,
-                                                      Key TEXT NOT NULL,
+                                                      Key TEXT PRIMARY KEY NOT NULL,
                                                       Value TEXT NOT NULL
                                                   )
                                   """;
@@ -44,23 +43,22 @@ public class SettingsService : ISettingsService
         }
     }
 
-    public Settings GetSettings(int id)
+    public Settings GetSettings(string key)
     {
         using (var connection = new SQLiteConnection(_connectionString))
         {
             connection.Open();
             var command = connection.CreateCommand();
-            command.CommandText = "SELECT * FROM Settings WHERE Id = @Id";
-            command.Parameters.AddWithValue("@Id", id);
+            command.CommandText = "SELECT * FROM Settings WHERE Key = @Key";
+            command.Parameters.AddWithValue("@Key", key);
             using (var reader = command.ExecuteReader())
             {
                 if (reader.Read())
                 {
                     return new Settings
                     {
-                        Id = reader.GetInt32(0),
-                        Key = reader.GetString(1),
-                        Value = reader.GetString(2)
+                        Key = reader.GetString(0),
+                        Value = reader.GetString(1)
                     };
                 }
             }
@@ -82,9 +80,8 @@ public class SettingsService : ISettingsService
                 {
                     settings.Add(new Settings
                     {
-                        Id = reader.GetInt32(0),
-                        Key = reader.GetString(1),
-                        Value = reader.GetString(2)
+                        Key = reader.GetString(0),
+                        Value = reader.GetString(1)
                     });
                 }
             }
@@ -98,49 +95,23 @@ public class SettingsService : ISettingsService
         {
             connection.Open();
             var command = connection.CreateCommand();
-            command.CommandText = "UPDATE Settings SET Key = @Key, Value = @Value WHERE Id = @Id";
+            command.CommandText = "UPDATE Settings SET  Value = @Value WHERE Key = @Key";
             command.Parameters.AddWithValue("@Key", settings.Key);
             command.Parameters.AddWithValue("@Value", settings.Value);
-            command.Parameters.AddWithValue("@Id", settings.Id);
             command.ExecuteNonQuery();
         }
     }
 
-    public void DeleteSettings(int id)
+    public void DeleteSettings(string key)
     {
         using (var connection = new SQLiteConnection(_connectionString))
         {
             connection.Open();
             var command = connection.CreateCommand();
-            command.CommandText = "DELETE FROM Settings WHERE Id = @Id";
-            command.Parameters.AddWithValue("@Id", id);
-            command.ExecuteNonQuery();
-        }
-    }
-
-    public IEnumerable<Settings> GetSettingsByKey(string key)
-    {
-        var settings = new List<Settings>();
-        using (var connection = new SQLiteConnection(_connectionString))
-        {
-            connection.Open();
-            var command = connection.CreateCommand();
-            command.CommandText = "SELECT * FROM Settings WHERE Key = @Key";
+            command.CommandText = "DELETE FROM Settings WHERE Key = @Key";
             command.Parameters.AddWithValue("@Key", key);
-            using (var reader = command.ExecuteReader())
-            {
-                while (reader.Read())
-                {
-                    settings.Add(new Settings
-                    {
-                        Id = reader.GetInt32(0),
-                        Key = reader.GetString(1),
-                        Value = reader.GetString(2)
-                    });
-                }
-            }
+            command.ExecuteNonQuery();
         }
-        return settings;
     }
     
 
@@ -159,9 +130,8 @@ public class SettingsService : ISettingsService
                 {
                     settings.Add(new Settings
                     {
-                        Id = reader.GetInt32(0),
-                        Key = reader.GetString(1),
-                        Value = reader.GetString(2)
+                        Key = reader.GetString(0),
+                        Value = reader.GetString(1)
                     });
                 }
             }

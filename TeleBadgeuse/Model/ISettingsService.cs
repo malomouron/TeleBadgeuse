@@ -5,10 +5,9 @@ namespace TeleBadgeuse.Model;
 public interface ISettingsService
 {
     void AddSettings(Settings settings);
-    Settings GetSettings(int id);
+    Settings GetSettings(string key);
     IEnumerable<Settings> GetAllSettings();
     void UpdateSettings(Settings settings);
-    void DeleteSettings(int id);
-    IEnumerable<Settings> GetSettingsByKey(string key);
+    void DeleteSettings(string key);
     IEnumerable<Settings> GetSettingsByValue(string value);
 }

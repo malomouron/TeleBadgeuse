@@ -36,7 +36,7 @@
 
         <Frame x:Name="MainFrame" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" Navigated="MainFrame_Navigated" NavigationUIVisibility="Hidden"/>
 
-        <Button x:Name="BigNav" HorizontalAlignment="Left" Grid.Row="1" VerticalAlignment="Top" Grid.Column="1" Style="{StaticResource SupprBorder}" Background="{DynamicResource AccentBrush}" Click="ToggleButton_Click">
+        <Button x:Name="BigNav" HorizontalAlignment="Left" Grid.Row="1" VerticalAlignment="Top" Grid.Column="1" Style="{StaticResource ResizeLeftBar}" Background="{StaticResource AccentBrush}" Click="ToggleButton_Click">
             <Button.Content>
                 <materialDesign:PackIcon x:Name="IconChevron" Kind="ChevronRight" Style="{StaticResource PackIconStyle}" Foreground="{DynamicResource AccentBrushForeground }" />
             </Button.Content>
