@@ -4,17 +4,19 @@
     <!-- Couleurs -->
     <Color x:Key="BackgroundColor">#475465</Color>
     <Color x:Key="ForegroundColor">#EEEDFF</Color>
-    <Color x:Key="AccentColor">#FF584D</Color>
     <Color x:Key="BackgroundColorBis">#556C96</Color>
     <Color x:Key="ForegroundColorBis">#B6CDE8</Color>
+    <Color x:Key="IsMouseHoverBackgroundColor">#66DDDDDD</Color>
+    <Color x:Key="IsPressedBackgroundColor">#66CCCCCC</Color>
 
     <!-- Brosse pour les fonds et les polices -->
     <SolidColorBrush x:Key="BackgroundBrush" Color="{StaticResource BackgroundColor}" />
     <SolidColorBrush x:Key="BackgroundBrushBis" Color="{StaticResource BackgroundColorBis}" />
     <SolidColorBrush x:Key="ForegroundBrush" Color="{StaticResource ForegroundColor}" />
     <SolidColorBrush x:Key="ForegroundBrushBis" Color="{StaticResource ForegroundColorBis}" />
-    <SolidColorBrush x:Key="AccentBrush" Color="{StaticResource AccentColor}" />
     <SolidColorBrush x:Key="AccentBrushForeground" Color="{StaticResource ForegroundColor}" />
+    <SolidColorBrush x:Key="IsMouseHoverBackgroundBrush" Color="{StaticResource IsMouseHoverBackgroundColor}" />
+    <SolidColorBrush x:Key="IsPressedBackgroundBrush" Color="{StaticResource IsPressedBackgroundColor}" />
 
     <!-- Style global pour les fenêtres -->
     <Style TargetType="Window">

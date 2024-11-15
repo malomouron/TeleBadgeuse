@@ -1,4 +1,5 @@
 ﻿using System.Windows.Controls;
+using TeleBadgeuse.Model;
 using TeleBadgeuse.Ressources;
 
 namespace TeleBadgeuse
@@ -8,6 +9,17 @@ namespace TeleBadgeuse
     /// </summary>
     public partial class SettingsPage 
     {
+        
+        
+        private const string dbPath = "Data Source=./data.db";
+        
+        private static SettingsViewModel _settingsViewModel = new SettingsViewModel(new SettingsService(dbPath));
+        
+        public static SettingsViewModel SettingsViewModel
+        {
+            get => _settingsViewModel;
+            private set => _settingsViewModel = value;
+        }
         #region Constructeur
 
         /// <summary>
@@ -16,9 +28,7 @@ namespace TeleBadgeuse
         public SettingsPage()
         {
             InitializeComponent();
-
-            // Définit le DataContext de la page sur le ViewModel principal.
-            DataContext = MainWindow.ViewModel;
+            DataContext = SettingsViewModel;
         }
 
         #endregion
@@ -47,7 +57,7 @@ namespace TeleBadgeuse
                 };
 
                 // Définit la nouvelle culture de l'application.
-                ResourceDictionaryManager.SetCulture(newCulture);
+                SettingsViewModel.ModifLanguageCommand.Execute(newCulture);
             }
         }
 

@@ -21,11 +21,14 @@
     <Content Include="Ressources\Icons\IconLight.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-  </ItemGroup>
-
-	
-  <ItemGroup>
-    <Folder Include="Model\" />
+    <None Remove="Ressources\Icons\IconLightFull.ico" />
+    <Content Include="Ressources\Icons\IconLightFull.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Remove="Ressources\Icons\IconDarkFull.ico" />
+    <Content Include="Ressources\Icons\IconDarkFull.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 	
@@ -62,7 +65,9 @@
 
 	
   <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0-preview1" />
     <PackageReference Include="MaterialDesignThemes" Version="5.1.1-ci795" />
+    <PackageReference Include="System.Data.SQLite" Version="1.0.119" />
   </ItemGroup>
 
 	

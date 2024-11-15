@@ -1,10 +1,9 @@
-﻿using System.Collections;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media.Imaging;
+using System.Windows.Data;
 using System.Windows.Navigation;
 using MaterialDesignThemes.Wpf;
-using TeleBadgeuse.ViewModel;
+using TeleBadgeuse.Data;
 using TeleBadgeuse.Ressources;
 
 namespace TeleBadgeuse
@@ -15,29 +14,10 @@ namespace TeleBadgeuse
     public partial class MainWindow
     {
         #region Attributs
-
-        /// <summary>
-        /// ViewModel principal de l'application.
-        /// </summary>
-        private static MainViewModel _viewModel = null!;
-
         /// <summary>
         /// Indique si le bouton de navigation est activé.
         /// </summary>
         private bool _isToggled = false;
-
-        #endregion
-
-        #region Propriétés
-
-        /// <summary>
-        /// Obtient le ViewModel principal de l'application.
-        /// </summary>
-        public static MainViewModel ViewModel
-        {
-            get => _viewModel;
-            private set => _viewModel = value;
-        }
 
         #endregion
 
@@ -49,19 +29,50 @@ namespace TeleBadgeuse
         public MainWindow()
         {
             InitializeComponent();
-            this.Icon = new BitmapImage(new Uri("pack://application:,,,/Ressources/Icons/IconLight.ico"));
 
-            ViewModel = new MainViewModel();
-            DataContext = ViewModel;
+            new SettingsPage(); // Initialize settings
+            
 
-            ResourceDictionaryManager.SetCulture("fr");
-            ResourceDictionaryManager.SetTheme("LightTheme");
-            MainFrame.Source = new Uri("/View/Page/HomePage.xaml", UriKind.Relative);
+            InitSettings();
+            InitMainWindow();
+
+            DataContext = SettingsPage.SettingsViewModel;
+            
+            //display settings
+            foreach (Settings settings in SettingsPage.SettingsViewModel.Settings)
+            {
+                Console.WriteLine(settings.Key + " : " + settings.Value);
+            }
         }
 
         #endregion
 
         #region Méthodes
+        
+        private void InitMainWindow()
+        {
+            this.SetBinding(IconProperty, new Binding("Icon") { Source = SettingsPage.SettingsViewModel });
+
+            ResourceDictionaryManager.SetCulture(SettingsPage.SettingsViewModel.SelectSettingsKey("Language").Value);
+            ResourceDictionaryManager.SetTheme(SettingsPage.SettingsViewModel.SelectSettingsKey("Theme").Value);
+            MainFrame.Source = new Uri(SettingsPage.SettingsViewModel.SelectSettingsKey("DefaultPage").Value, UriKind.Relative);
+        }
+        
+        private void InitSettings()
+        {
+            if (SettingsPage.SettingsViewModel.SelectSettingsKey("Theme") == null)
+            {
+                SettingsPage.SettingsViewModel.AddSettingsCommand.Execute(("Theme", "DarkTheme"));
+            }
+            if (SettingsPage.SettingsViewModel.SelectSettingsKey("DefaultPage") == null)
+            {
+                SettingsPage.SettingsViewModel.AddSettingsCommand.Execute(("DefaultPage", "/View/Page/HomePage.xaml"));
+            }
+            if (SettingsPage.SettingsViewModel.SelectSettingsKey("Language") == null)
+            {
+                SettingsPage.SettingsViewModel.AddSettingsCommand.Execute(("Language", "fr"));
+            }
+        }
 
         /// <summary>
         /// Gère l'événement de navigation du MainFrame.
