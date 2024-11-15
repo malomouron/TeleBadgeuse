@@ -16,6 +16,9 @@ namespace TeleBadgeuse
         public TitleBar()
         {
             InitializeComponent();
+            
+            // Définit le DataContext de la barre de titre sur le ViewModel principal.
+            DataContext = SettingsPage.SettingsViewModel;
         }
 
         #endregion

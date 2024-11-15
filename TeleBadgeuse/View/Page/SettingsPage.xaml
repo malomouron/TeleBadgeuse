@@ -11,7 +11,6 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <TextBlock Grid.Row="0" Text="Settings Page" VerticalAlignment="Center" HorizontalAlignment="Center"/>
         <ComboBox Grid.Row="1" x:Name="LanguageComboBox" SelectionChanged="LanguageComboBox_SelectionChanged"  Width="120" Height="21" >
             <ComboBoxItem Content="{DynamicResource LangFr}"/>
             <ComboBoxItem Content="{DynamicResource LangEn}"/>

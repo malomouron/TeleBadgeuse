@@ -12,16 +12,16 @@
 
             <!-- Titre dans la première colonne -->
             <StackPanel VerticalAlignment="Center" Orientation="Horizontal" Margin="15,5" Grid.Column="0">
-                <Image  Height="20" Width="20" Source="{Binding ImageSource, Mode=TwoWay}"/>
+                <Image  Height="20" Width="20" Source="{Binding ImageSource}"/>
                 <TextBlock Margin="10,5" Text="{DynamicResource AppName}" 
                            Foreground="{DynamicResource ForegroundBrush}" />
             </StackPanel>
                 
             <!-- Boutons dans la deuxième colonne, alignés à droite -->
             <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Right">
-                <Button Content="🗕" Click="Minimize_Click" Width="30" Background="Transparent"/>
-                <Button Content="🗖" Click="Maximize_Click" Width="30" Background="Transparent"/>
-                <Button Content="✕" Click="Close_Click" Width="30" Background="Transparent"/>
+                <Button Content="🗕" Foreground="{DynamicResource ForegroundBrush}" Style="{StaticResource BtnControlWindows}" Click="Minimize_Click" />
+                <Button Content="🗖" Foreground="{DynamicResource ForegroundBrush}" Style="{StaticResource BtnControlWindows}" Click="Maximize_Click"/>
+                <Button Content="✕" Style="{StaticResource BtnCloseWindow}" Click="Close_Click"/>
             </StackPanel>
         </Grid>
     </Border>
