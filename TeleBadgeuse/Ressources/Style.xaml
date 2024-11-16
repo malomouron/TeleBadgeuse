@@ -2,15 +2,187 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
     
-    <Color x:Key="IsMouseHoverBackgroundAccentColor">#66DDDDDD</Color> <!-- -->
-    <Color x:Key="IsPressedBackgroundAccentColor">#66CCCCCC</Color> <!-- -->
-    <Color x:Key="AccentColor">#FF584D</Color>  <!-- -->
+    <Color x:Key="IsMouseHoverBackgroundAccentColor">#66DDDDDD</Color> 
+    <Color x:Key="IsPressedBackgroundAccentColor">#66CCCCCC</Color> 
+    <Color x:Key="AccentColor">#FF584D</Color>
+    <Color x:Key="AccentColorTranspent">#BBFF584D</Color>
     
     
     <SolidColorBrush x:Key="AccentBrush" Color="{StaticResource AccentColor}" />
     <SolidColorBrush x:Key="IsMouseHoverBackgroundAccentBrush" Color="{StaticResource IsMouseHoverBackgroundAccentColor}" />
     <SolidColorBrush x:Key="IsPressedBackgroundAccentBrush" Color="{StaticResource IsPressedBackgroundAccentColor}" />
+    <SolidColorBrush x:Key="AccentBrushTransparent" Color="{StaticResource AccentColorTranspent}" />
     
+    <Style TargetType="Button" x:Key="ModifDateRight">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="Border"
+                            CornerRadius="0 15 15 0"
+                            BorderBrush="{StaticResource AccentBrush}"
+                            BorderThickness="1"
+                            Background="Transparent"
+                            Width="60"
+                            Height="30"
+                            Margin="0">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Border" Property="Background" Value="{StaticResource AccentBrushTransparent}" />
+                            <Setter Property="Foreground" Value="White" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Foreground" Value="{StaticResource AccentBrush}" />
+    </Style>
+    <Style TargetType="Button" x:Key="ModifDateLeft">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="Border"
+                            CornerRadius="15 0 0 15"
+                            BorderBrush="{StaticResource AccentBrush}"
+                            BorderThickness="1"
+                            Background="Transparent"
+                            Width="60"
+                            Height="30"
+                            Margin="0">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Border" Property="Background" Value="{StaticResource AccentBrushTransparent}" />
+                            <Setter Property="Foreground" Value="White" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Foreground" Value="{StaticResource AccentBrush}" />
+    </Style>
+    <Style x:Key="ModifDateBorder" TargetType="Border">
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="BorderBrush" Value="{StaticResource AccentBrush}" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Width" Value="60" />
+        <Setter Property="Height" Value="30" />
+    </Style>
+    <Style x:Key="ModifDate">
+        <Setter Property="TextBlock.FontSize" Value="17"/>
+        <Setter Property="TextBlock.Foreground" Value="{StaticResource AccentBrush}" />
+    </Style>
+    
+    
+    
+    
+    
+    <Style TargetType="RadioButton" x:Key="CustomRadioButtonStyleRight">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="RadioButton">
+                    <Border x:Name="Border"
+                            CornerRadius="0 15 15 0"
+                            BorderBrush="{StaticResource AccentBrush}"
+                            BorderThickness="1"
+                            Background="Transparent"
+                            Width="60"
+                            Height="30"
+                            Margin="0">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="Border" Property="Background" Value="{StaticResource AccentBrush}" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource AccentBrush}" />
+                            <Setter Property="Foreground" Value="White" />
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="False">
+                            <Setter TargetName="Border" Property="Background" Value="Transparent" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource AccentBrush}" />
+                            <Setter Property="Foreground" Value="{StaticResource AccentBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Border" Property="Background" Value="{StaticResource AccentBrushTransparent}" />
+                            <Setter Property="Foreground" Value="White" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Foreground" Value="{StaticResource AccentBrush}" />
+    </Style>
+    <Style TargetType="RadioButton" x:Key="CustomRadioButtonStyleLeft">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="RadioButton">
+                    <Border x:Name="Border"
+                            CornerRadius="15 0 0 15"
+                            BorderBrush="{StaticResource AccentBrush}"
+                            BorderThickness="1"
+                            Background="Transparent"
+                            Width="60"
+                            Height="30"
+                            Margin="0">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="Border" Property="Background" Value="{StaticResource AccentBrush}" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource AccentBrush}" />
+                            <Setter Property="Foreground" Value="White" />
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="False">
+                            <Setter TargetName="Border" Property="Background" Value="Transparent" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource AccentBrush}" />
+                            <Setter Property="Foreground" Value="{StaticResource AccentBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Border" Property="Background" Value="{StaticResource AccentBrushTransparent}" />
+                            <Setter Property="Foreground" Value="White" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Foreground" Value="{StaticResource AccentBrush}" />
+    </Style>
+    <Style TargetType="RadioButton" x:Key="CustomRadioButtonStyle">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="RadioButton">
+                    <Border x:Name="Border"
+                            BorderBrush="{StaticResource AccentBrush}"
+                            BorderThickness="1"
+                            Background="Transparent"
+                            Width="60"
+                            Height="30"
+                            Margin="0">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="Border" Property="Background" Value="{StaticResource AccentBrush}" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource AccentBrush}" />
+                            <Setter Property="Foreground" Value="White" />
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="False">
+                            <Setter TargetName="Border" Property="Background" Value="Transparent" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource AccentBrush}" />
+                            <Setter Property="Foreground" Value="{StaticResource AccentBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="Border" Property="Background" Value="{StaticResource AccentBrushTransparent}" />
+                            <Setter Property="Foreground" Value="White" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Foreground" Value="{StaticResource AccentBrush}" />
+    </Style>
     <Style x:Key="PopUpBtn">
         <Setter Property="Button.Background" Value="{DynamicResource ForegroundBrushBis}"/>
         <Setter Property="Button.BorderBrush" Value="Transparent"/>

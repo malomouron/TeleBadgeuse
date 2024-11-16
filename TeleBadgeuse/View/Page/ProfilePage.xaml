@@ -2,6 +2,9 @@
 <Page x:Class="TeleBadgeuse.ProfilePage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Page.Resources>
+        <ResourceDictionary Source="pack://application:,,,/Ressources/Style.xaml" />
+    </Page.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
@@ -13,31 +16,34 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="0.25*"/>
-            <RowDefinition Height="1.5*"/>
+            <RowDefinition Height="0.75*"/>
+            <RowDefinition Height="0.75*"/>
             <RowDefinition Height="0.25*"/>
             <RowDefinition Height="3*"/>
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
 
         <!-- Radio Buttons -->
-        <StackPanel Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Orientation="Horizontal" VerticalAlignment="Center">
-            <RadioButton Content="All" GroupName="Filter" IsChecked="{Binding IsAllSelected}" Margin="10,0"/>
-            <RadioButton Content="Years" GroupName="Filter" IsChecked="{Binding IsYearsSelected}" Margin="10,0"/>
-            <RadioButton Content="Months" GroupName="Filter" IsChecked="{Binding IsMonthsSelected}" Margin="10,0"/>
-            <RadioButton Content="Days" GroupName="Filter" IsChecked="{Binding IsDaysSelected}" Margin="10,0"/>
+        <StackPanel Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <RadioButton Content="All" Style="{StaticResource CustomRadioButtonStyleLeft}" GroupName="Filter" IsChecked="{Binding IsAllSelected}"/>
+            <RadioButton Content="Years" Style="{StaticResource CustomRadioButtonStyle}" GroupName="Filter" IsChecked="{Binding IsYearsSelected}" />
+            <RadioButton Content="Months" Style="{StaticResource CustomRadioButtonStyle}" GroupName="Filter" IsChecked="{Binding IsMonthsSelected}"/>
+            <RadioButton Content="Days" Style="{StaticResource CustomRadioButtonStyleRight}" GroupName="Filter" IsChecked="{Binding IsDaysSelected}"/>
         </StackPanel>
 
         <!-- Navigation Buttons -->
-        <StackPanel Grid.Column="3" Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-            <Button Background="White" Content="-" Command="{Binding DecrementCommand}" Margin="10,0"/>
+        <StackPanel x:Name="AddTime" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Button Style="{StaticResource ModifDateLeft}" Content="-" Command="{Binding DecrementCommand}"/>
             <!-- Date Preview -->
-            <TextBlock Text="{Binding SelectedDatePreview}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" FontWeight="Bold"/>
-            <Button Background="White" Content="+" Command="{Binding IncrementCommand}" Margin="10,0"/>
+            <Border Style="{StaticResource ModifDateBorder}" Width="100">
+                <TextBlock Style="{StaticResource ModifDate}" Text="{Binding SelectedDatePreview}" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center"/>
+            </Border>
+            <Button Style="{StaticResource ModifDateRight}" Content="+" Command="{Binding IncrementCommand}"/>
         </StackPanel>
 
 
         <!-- DataGrid -->
-        <DataGrid Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="3" ItemsSource="{Binding Badges}" AutoGenerateColumns="False" IsReadOnly="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <DataGrid Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="4" ItemsSource="{Binding Badges}" AutoGenerateColumns="False" IsReadOnly="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="*"/>
                 <DataGridTextColumn Header="Date" Binding="{Binding Date}" Width="*"/>

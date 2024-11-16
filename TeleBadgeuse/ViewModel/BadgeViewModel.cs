@@ -19,13 +19,16 @@ namespace TeleBadgeuse
         private bool _isDaysSelected;
         private DateTime _currentDate;
         private string _selectedDatePreview;
+        private readonly ProfilePage _profilePage;
 
-        public BadgeViewModel(IBadgeService badgeService)
+        public BadgeViewModel(IBadgeService badgeService, ProfilePage profilePage = null)
         {
             _badgeService = badgeService;
             _currentDate = DateTime.Now;
             LoadBadges();
             IsAllSelected = true; // Default selection
+            _profilePage = profilePage;
+            
         }
 
         public ObservableCollection<Badge> Badges
@@ -44,6 +47,13 @@ namespace TeleBadgeuse
             set
             {
                 _isAllSelected = value;
+                if (_profilePage != null)
+                {
+                    if (_isAllSelected)
+                    {
+                        _profilePage.TurnOff();
+                    }
+                }
                 OnPropertyChanged();
                 FilterBadges();
             }
@@ -55,6 +65,16 @@ namespace TeleBadgeuse
             set
             {
                 _isYearsSelected = value;
+                {
+                    _currentDate = DateTime.Now;
+                }
+                if (_profilePage != null)
+                {
+                    if (_isYearsSelected)
+                    {
+                        _profilePage.TurnOn();
+                    }
+                }
                 OnPropertyChanged();
                 FilterBadges();
             }
@@ -66,6 +86,16 @@ namespace TeleBadgeuse
             set
             {
                 _isMonthsSelected = value;
+                {
+                    _currentDate = DateTime.Now;
+                }
+                if (_profilePage != null)
+                {
+                    if (_isMonthsSelected)
+                    {
+                        _profilePage.TurnOn();
+                    }
+                }
                 OnPropertyChanged();
                 FilterBadges();
             }
@@ -77,6 +107,17 @@ namespace TeleBadgeuse
             set
             {
                 _isDaysSelected = value;
+                if (_isDaysSelected)
+                {
+                    _currentDate = DateTime.Now;
+                }
+                if (_profilePage != null)
+                {
+                    if (_isDaysSelected)
+                    {
+                        _profilePage.TurnOn();
+                    }
+                }
                 OnPropertyChanged();
                 FilterBadges();
             }
