@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
@@ -16,10 +17,13 @@ namespace TeleBadgeuse
         private bool _isYearsSelected;
         private bool _isMonthsSelected;
         private bool _isDaysSelected;
+        private DateTime _currentDate;
+        private string _selectedDatePreview;
 
         public BadgeViewModel(IBadgeService badgeService)
         {
             _badgeService = badgeService;
+            _currentDate = DateTime.Now;
             LoadBadges();
             IsAllSelected = true; // Default selection
         }
@@ -78,13 +82,25 @@ namespace TeleBadgeuse
             }
         }
 
+        public string SelectedDatePreview
+        {
+            get => _selectedDatePreview;
+            set
+            {
+                _selectedDatePreview = value;
+                OnPropertyChanged();
+            }
+        }
+
         public ICommand AddBadgeCommand => new RelayCommand<bool>(AddBadge);
-        public ICommand UpdateBadgeCommand => new RelayCommand<object>((param) => 
+        public ICommand UpdateBadgeCommand => new RelayCommand<object>((param) =>
         {
             var (id, date, isStart) = ((int, DateTime, bool))param;
             UpdateBadge(id, date, isStart);
         });
         public ICommand DeleteBadgeCommand => new RelayCommand<int>(DeleteBadge);
+        public ICommand IncrementCommand => new RelayCommand(IncrementDate);
+        public ICommand DecrementCommand => new RelayCommand(DecrementDate);
 
         private void LoadBadges()
         {
@@ -113,29 +129,60 @@ namespace TeleBadgeuse
 
         private void FilterBadges()
         {
-            // Implement filtering logic based on the selected radio button
-            // This is a placeholder for the actual filtering logic
             if (IsAllSelected)
             {
                 Badges = new ObservableCollection<Badge>(_badgeService.GetAllBadges());
+                SelectedDatePreview = string.Empty;
             }
             else if (IsYearsSelected)
             {
-                // Filter by years
-                Badges = new ObservableCollection<Badge>(_badgeService.getBadgesByYear(DateTime.Now.Year));
-                Console.WriteLine("Filter by years");
-                
+                Badges = new ObservableCollection<Badge>(_badgeService.getBadgesByYear(_currentDate.Year));
+                SelectedDatePreview = _currentDate.ToString("yyyy");
             }
             else if (IsMonthsSelected)
             {
-                // Filter by months
-                Badges = new ObservableCollection<Badge>(_badgeService.getBadgesByMonthYear(DateTime.Now.Month, DateTime.Now.Year));
+                Badges = new ObservableCollection<Badge>(_badgeService.getBadgesByMonthYear(_currentDate.Month, _currentDate.Year));
+                SelectedDatePreview = _currentDate.ToString("yyyy-MM");
             }
             else if (IsDaysSelected)
             {
-                // Filter by days
-                Badges = new ObservableCollection<Badge>(_badgeService.getBadgesByDayMonthYear(DateTime.Now.Day, DateTime.Now.Month, DateTime.Now.Year));
+                Badges = new ObservableCollection<Badge>(_badgeService.getBadgesByDayMonthYear(_currentDate.Day, _currentDate.Month, _currentDate.Year));
+                SelectedDatePreview = _currentDate.ToString("yyyy-MM-dd");
             }
+        }
+
+        private void IncrementDate()
+        {
+            if (IsYearsSelected)
+            {
+                _currentDate = _currentDate.AddYears(1);
+            }
+            else if (IsMonthsSelected)
+            {
+                _currentDate = _currentDate.AddMonths(1);
+            }
+            else if (IsDaysSelected)
+            {
+                _currentDate = _currentDate.AddDays(1);
+            }
+            FilterBadges();
+        }
+
+        private void DecrementDate()
+        {
+            if (IsYearsSelected)
+            {
+                _currentDate = _currentDate.AddYears(-1);
+            }
+            else if (IsMonthsSelected)
+            {
+                _currentDate = _currentDate.AddMonths(-1);
+            }
+            else if (IsDaysSelected)
+            {
+                _currentDate = _currentDate.AddDays(-1);
+            }
+            FilterBadges();
         }
 
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
