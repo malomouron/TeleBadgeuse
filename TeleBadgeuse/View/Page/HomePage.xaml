@@ -20,7 +20,7 @@
             <RowDefinition Height="3*"/>
         </Grid.RowDefinitions>
         <TextBlock x:Name="CurrentTimeTextBlock" Grid.ColumnSpan="5" VerticalAlignment="Center" Style="{StaticResource HoursText}" Foreground="{DynamicResource ForegroundBrush}" HorizontalAlignment="Center"/>
-        <Button Grid.Column="1" Grid.Row="2" Style="{StaticResource Comming}" Content="Arrivé" />
-        <Button Grid.Column="3" Grid.Row="2" Style="{StaticResource Comming}" Content="Départ" />
+        <Button Grid.Column="1" Grid.Row="2" Style="{StaticResource Comming}" Content="{DynamicResource Start}" />
+        <Button Grid.Column="3" Grid.Row="2" Style="{StaticResource Comming}" Content="{DynamicResource End}" />
     </Grid>
 </Page>

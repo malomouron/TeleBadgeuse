@@ -8,4 +8,6 @@
     <sys:String x:Key="Home">Accueil</sys:String>
     <sys:String x:Key="Profile">Profil</sys:String>
     <sys:String x:Key="Settings">Paramètres</sys:String>
+    <sys:String x:Key="Start">Début</sys:String>
+    <sys:String x:Key="End">Fin</sys:String>
 </ResourceDictionary>
