@@ -10,4 +10,8 @@
     <sys:String x:Key="Settings">Paramètres</sys:String>
     <sys:String x:Key="Start">Début</sys:String>
     <sys:String x:Key="End">Fin</sys:String>
+    <sys:String x:Key="Yes">Oui</sys:String>
+    <sys:String x:Key="No">Non</sys:String>
+    <sys:String x:Key="StartQuestion">Voulez-vous commencer votre journée ?</sys:String>
+    <sys:String x:Key="EndQuestion">Voulez-vous terminer votre journée ?</sys:String>
 </ResourceDictionary>

@@ -11,6 +11,32 @@
     <SolidColorBrush x:Key="IsMouseHoverBackgroundAccentBrush" Color="{StaticResource IsMouseHoverBackgroundAccentColor}" />
     <SolidColorBrush x:Key="IsPressedBackgroundAccentBrush" Color="{StaticResource IsPressedBackgroundAccentColor}" />
     
+    <Style x:Key="PopUpBtn">
+        <Setter Property="Button.Background" Value="{DynamicResource ForegroundBrushBis}"/>
+        <Setter Property="Button.BorderBrush" Value="Transparent"/>
+        <Setter Property="Button.BorderThickness" Value="0"/>
+        <Setter Property="Button.Height" Value="40"/>
+        <Setter Property="Button.Width" Value="100"/>
+        <Setter Property="Button.Foreground" Value="{DynamicResource BackgroundBrush}" />
+        <Setter Property="Button.Cursor" Value="Hand" />
+        <Setter Property="Button.Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="10">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Background" Value="{DynamicResource IsPressedBackgroundBrush}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
     <Style x:Key="Comming">
         <Setter Property="Button.Background" Value="{DynamicResource ForegroundBrushBis}"/>
         <Setter Property="Button.BorderBrush" Value="Transparent"/>

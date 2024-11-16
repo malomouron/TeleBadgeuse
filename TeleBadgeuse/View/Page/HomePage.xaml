@@ -20,7 +20,8 @@
             <RowDefinition Height="3*"/>
         </Grid.RowDefinitions>
         <TextBlock x:Name="CurrentTimeTextBlock" Grid.ColumnSpan="5" VerticalAlignment="Center" Style="{StaticResource HoursText}" Foreground="{DynamicResource ForegroundBrush}" HorizontalAlignment="Center"/>
-        <Button Grid.Column="1" Grid.Row="2" Style="{StaticResource Comming}" Content="{DynamicResource Start}" />
-        <Button Grid.Column="3" Grid.Row="2" Style="{StaticResource Comming}" Content="{DynamicResource End}" />
+        <Button Grid.Column="1" Grid.Row="2" Style="{StaticResource Comming}" Content="{DynamicResource Start}" Click="Start_Click"/>
+        <Button Grid.Column="3" Grid.Row="2" Style="{StaticResource Comming}" Content="{DynamicResource End}" Click="End_Click"/>
+        <ContentControl x:Name="PopupContentControl" Grid.ColumnSpan="5" Grid.RowSpan="4" Visibility="Collapsed"/>
     </Grid>
 </Page>

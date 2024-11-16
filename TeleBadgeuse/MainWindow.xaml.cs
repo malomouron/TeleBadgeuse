@@ -8,11 +8,14 @@ using TeleBadgeuse.Ressources;
 
 namespace TeleBadgeuse
 {
+    
     /// <summary>
     /// Logique d'interaction pour MainWindow.xaml
     /// </summary>
     public partial class MainWindow
     {
+        public const string dbPath = "Data Source=./data.db";
+        
         #region Attributs
         /// <summary>
         /// Indique si le bouton de navigation est activé.
