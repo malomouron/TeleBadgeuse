@@ -1,9 +1,17 @@
-﻿namespace TeleBadgeuse;
+﻿using System.Windows.Controls;
+using TeleBadgeuse.Model;
 
-public partial class ProfilePage
+namespace TeleBadgeuse
 {
-    public ProfilePage()
+    public partial class ProfilePage : Page
     {
-        InitializeComponent();
+        private BadgeViewModel _badgeViewModel;
+
+        public ProfilePage()
+        {
+            InitializeComponent();
+            _badgeViewModel = new BadgeViewModel(new BadgeService(MainWindow.dbPath));
+            DataContext = _badgeViewModel;
+        }
     }
 }

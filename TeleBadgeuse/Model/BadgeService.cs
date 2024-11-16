@@ -91,6 +91,84 @@ namespace TeleBadgeuse.Model
             return badges;
         }
 
+        public IEnumerable<Badge> getBadgesByYear(int year)
+        {
+            var badges = new List<Badge>();
+            using (var connection = new SQLiteConnection(_connectionString))
+            {
+                connection.Open();
+                var command = connection.CreateCommand();
+                command.CommandText = "SELECT * FROM Badges WHERE strftime('%Y', Date) = @Year";
+                command.Parameters.AddWithValue("@Year", year.ToString());
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        badges.Add(new Badge
+                        {
+                            Id = reader.GetInt32(0),
+                            Date = reader.GetDateTime(1),
+                            IsStart = reader.GetInt32(2) == 1
+                        });
+                    }
+                }
+            }
+            return badges;
+        }
+
+        public IEnumerable<Badge> getBadgesByMonthYear(int month, int year)
+        {
+            var badges = new List<Badge>();
+            using (var connection = new SQLiteConnection(_connectionString))
+            {
+                connection.Open();
+                var command = connection.CreateCommand();
+                command.CommandText = "SELECT * FROM Badges WHERE strftime('%m', Date) = @Month AND strftime('%Y', Date) = @Year";
+                command.Parameters.AddWithValue("@Month", month.ToString("00"));
+                command.Parameters.AddWithValue("@Year", year.ToString());
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        badges.Add(new Badge
+                        {
+                            Id = reader.GetInt32(0),
+                            Date = reader.GetDateTime(1),
+                            IsStart = reader.GetInt32(2) == 1
+                        });
+                    }
+                }
+            }
+            return badges;
+        }
+
+        public IEnumerable<Badge> getBadgesByDayMonthYear(int day, int month, int year)
+        {
+            var badges = new List<Badge>();
+            using (var connection = new SQLiteConnection(_connectionString))
+            {
+                connection.Open();
+                var command = connection.CreateCommand();
+                command.CommandText = "SELECT * FROM Badges WHERE strftime('%d', Date) = @Day AND strftime('%m', Date) = @Month AND strftime('%Y', Date) = @Year";
+                command.Parameters.AddWithValue("@Day", day.ToString("00"));
+                command.Parameters.AddWithValue("@Month", month.ToString("00"));
+                command.Parameters.AddWithValue("@Year", year.ToString());
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        badges.Add(new Badge
+                        {
+                            Id = reader.GetInt32(0),
+                            Date = reader.GetDateTime(1),
+                            IsStart = reader.GetInt32(2) == 1
+                        });
+                    }
+                }
+            }
+            return badges;
+        }
+
         public void UpdateBadge(Badge badge)
         {
             using (var connection = new SQLiteConnection(_connectionString))
