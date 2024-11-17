@@ -14,4 +14,8 @@
     <sys:String x:Key="No">Non</sys:String>
     <sys:String x:Key="StartQuestion">Voulez-vous commencer votre journée ?</sys:String>
     <sys:String x:Key="EndQuestion">Voulez-vous terminer votre journée ?</sys:String>
+    <sys:String x:Key="All">Tous</sys:String>
+    <sys:String x:Key="Years">Années</sys:String>
+    <sys:String x:Key="Months">Mois</sys:String>
+    <sys:String x:Key="Days">Jours</sys:String>
 </ResourceDictionary>
