@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -20,6 +21,76 @@ namespace TeleBadgeuse
         private DateTime _currentDate;
         private string _selectedDatePreview;
         private readonly ProfilePage _profilePage;
+        private bool _isViewListSelected;
+        private bool _isViewGridSelected;
+        private bool _isViewModuleSelected;
+        private bool _isTimelineSelected;
+        
+        public bool IsViewListSelected
+        {
+            get => _isViewListSelected;
+            set
+            {
+                _isViewListSelected = value;
+                OnPropertyChanged();
+                UpdateView();
+            }
+        }
+
+        public bool IsViewGridSelected
+        {
+            get => _isViewGridSelected;
+            set
+            {
+                _isViewGridSelected = value;
+                OnPropertyChanged();
+                UpdateView();
+            }
+        }
+
+        public bool IsViewModuleSelected
+        {
+            get => _isViewModuleSelected;
+            set
+            {
+                _isViewModuleSelected = value;
+                OnPropertyChanged();
+                UpdateView();
+            }
+        }
+
+        public bool IsTimelineSelected
+        {
+            get => _isTimelineSelected;
+            set
+            {
+                _isTimelineSelected = value;
+                OnPropertyChanged();
+                UpdateView();
+            }
+        }
+        
+        private void UpdateView()
+        {
+            // Update the ItemsSource of the DataGrid based on the selected view
+            if (IsViewListSelected)
+            {
+                // Set ItemsSource for list view
+            }
+            else if (IsViewGridSelected)
+            {
+                // Set ItemsSource for grid view
+            }
+            else if (IsViewModuleSelected)
+            {
+                // Set ItemsSource for module view
+            }
+            else if (IsTimelineSelected)
+            {
+                // Set ItemsSource for timeline view
+            }
+        }
+
 
         public BadgeViewModel(IBadgeService badgeService, ProfilePage profilePage = null)
         {
@@ -27,6 +98,7 @@ namespace TeleBadgeuse
             _currentDate = DateTime.Now;
             LoadBadges();
             IsAllSelected = true; // Default selection
+            IsViewListSelected = true; // Default selection
             _profilePage = profilePage;
             
         }
@@ -132,6 +204,35 @@ namespace TeleBadgeuse
                 OnPropertyChanged();
             }
         }
+        
+        public ObservableCollection<Badge> BadgesIsStart
+        {
+            get => new ObservableCollection<Badge>(Badges.Where(b => b.IsStart));
+            
+        }
+        
+        public ObservableCollection<Badge> BadgesIsEnd
+        {
+            get => new ObservableCollection<Badge>(Badges.Where(b => b.IsEnd));
+        }
+
+        public ObservableCollection<BadgePair> MergedBadges
+        {
+            get
+            {
+                ObservableCollection<BadgePair> mergedBadges = new ObservableCollection<BadgePair>();
+                int maxCount = Math.Max(BadgesIsStart.Count, BadgesIsEnd.Count);
+                for (int i = 0; i < maxCount; i++)
+                {
+                    mergedBadges.Add(new BadgePair
+                    {
+                        StartBadge = i < BadgesIsStart.Count ? BadgesIsStart[i] : null,
+                        EndBadge = i < BadgesIsEnd.Count ? BadgesIsEnd[i] : null
+                    });
+                }
+                return mergedBadges;
+            }
+        }
 
         public ICommand AddBadgeCommand => new RelayCommand<bool>(AddBadge);
         public ICommand UpdateBadgeCommand => new RelayCommand<object>((param) =>
@@ -167,6 +268,8 @@ namespace TeleBadgeuse
             _badgeService.DeleteBadge(id);
             LoadBadges();
         }
+        
+        
 
         private void FilterBadges()
         {

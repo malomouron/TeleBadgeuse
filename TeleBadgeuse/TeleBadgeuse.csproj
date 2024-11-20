@@ -29,6 +29,7 @@
     <Content Include="Ressources\Icons\IconDarkFull.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Remove="my_html.html" />
   </ItemGroup>
 
 	
@@ -41,6 +42,7 @@
     <Resource Include="Ressources\Icons\IconLight.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
+    <None Remove="Ressources\my_html.html" />
   </ItemGroup>
 
 	
@@ -67,6 +69,7 @@
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0-preview1" />
     <PackageReference Include="MaterialDesignThemes" Version="5.1.1-ci795" />
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2895-prerelease" />
     <PackageReference Include="System.Data.SQLite" Version="1.0.119" />
   </ItemGroup>
 

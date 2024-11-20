@@ -1,4 +1,6 @@
-﻿using System.Windows.Controls;
+﻿using System.IO;
+using System.Windows;
+using System.Windows.Controls;
 using TeleBadgeuse.Model;
 
 namespace TeleBadgeuse
@@ -14,7 +16,8 @@ namespace TeleBadgeuse
             DataContext = _badgeViewModel;
             _badgeViewModel.IsDaysSelected = true;
         }
-
+        
+        
         public void TurnOff()
         {
             AddTime.Visibility = System.Windows.Visibility.Hidden;
