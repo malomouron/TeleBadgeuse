@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -13,6 +14,7 @@ namespace TeleBadgeuse
     {
         private readonly IBadgeService _badgeService;
         private ObservableCollection<Badge> _badges;
+        private ObservableCollection<BadgePair> _badgePairs;
         private bool _isAllSelected;
         private bool _isYearsSelected;
         private bool _isMonthsSelected;
@@ -20,13 +22,85 @@ namespace TeleBadgeuse
         private DateTime _currentDate;
         private string _selectedDatePreview;
         private readonly ProfilePage _profilePage;
+        private bool _isViewListSelected;
+        private bool _isViewGridSelected;
+        private bool _isViewModuleSelected;
+        private bool _isTimelineSelected;
+        
+        public bool IsViewListSelected
+        {
+            get => _isViewListSelected;
+            set
+            {
+                _isViewListSelected = value;
+                OnPropertyChanged();
+                UpdateView();
+            }
+        }
+
+        public bool IsViewGridSelected
+        {
+            get => _isViewGridSelected;
+            set
+            {
+                _isViewGridSelected = value;
+                OnPropertyChanged();
+                UpdateView();
+            }
+        }
+
+        public bool IsViewModuleSelected
+        {
+            get => _isViewModuleSelected;
+            set
+            {
+                _isViewModuleSelected = value;
+                OnPropertyChanged();
+                UpdateView();
+            }
+        }
+
+        public bool IsTimelineSelected
+        {
+            get => _isTimelineSelected;
+            set
+            {
+                _isTimelineSelected = value;
+                OnPropertyChanged();
+                UpdateView();
+            }
+        }
+        
+        private void UpdateView()
+        {
+            // Update the ItemsSource of the DataGrid based on the selected view
+            if (IsViewListSelected)
+            {
+                // Set ItemsSource for list view
+            }
+            else if (IsViewGridSelected)
+            {
+                // Set ItemsSource for grid view
+            }
+            else if (IsViewModuleSelected)
+            {
+                // Set ItemsSource for module view
+            }
+            else if (IsTimelineSelected)
+            {
+                // Set ItemsSource for timeline view
+            }
+        }
+
 
         public BadgeViewModel(IBadgeService badgeService, ProfilePage profilePage = null)
         {
             _badgeService = badgeService;
             _currentDate = DateTime.Now;
             LoadBadges();
+            LoadBadgesPair();
             IsAllSelected = true; // Default selection
+            IsViewListSelected = true; // Default selection
             _profilePage = profilePage;
             
         }
@@ -132,6 +206,19 @@ namespace TeleBadgeuse
                 OnPropertyChanged();
             }
         }
+        
+        public ObservableCollection<BadgePair> BadgePairs
+        {
+            get
+            {
+                return _badgePairs;
+            }
+            set
+            {
+                _badgePairs = value;
+                OnPropertyChanged();
+            }
+        }
 
         public ICommand AddBadgeCommand => new RelayCommand<bool>(AddBadge);
         public ICommand UpdateBadgeCommand => new RelayCommand<object>((param) =>
@@ -146,6 +233,23 @@ namespace TeleBadgeuse
         private void LoadBadges()
         {
             Badges = new ObservableCollection<Badge>(_badgeService.GetAllBadges());
+        }
+
+        private void LoadBadgesPair()
+        {
+            ObservableCollection<BadgePair> mergedBadges = new ObservableCollection<BadgePair>();
+            ObservableCollection<Badge> badgesIsStart = new ObservableCollection<Badge>(Badges.Where(b => b.IsStart));
+            ObservableCollection<Badge> badgesIsEnd = new ObservableCollection<Badge>(Badges.Where(b => b.IsEnd));
+            int maxCount = Math.Max(badgesIsStart.Count, badgesIsEnd.Count);
+            for (int i = 0; i < maxCount; i++)
+            {
+                mergedBadges.Add(new BadgePair
+                {
+                    StartBadge = i < badgesIsStart.Count ? badgesIsStart[i] : null,
+                    EndBadge = i < badgesIsEnd.Count ? badgesIsEnd[i] : null
+                });
+            }
+            BadgePairs = mergedBadges;
         }
 
         private void AddBadge(bool isStart)
@@ -167,27 +271,33 @@ namespace TeleBadgeuse
             _badgeService.DeleteBadge(id);
             LoadBadges();
         }
+        
+        
 
         private void FilterBadges()
         {
             if (IsAllSelected)
             {
                 Badges = new ObservableCollection<Badge>(_badgeService.GetAllBadges());
+                LoadBadgesPair();
                 SelectedDatePreview = string.Empty;
             }
             else if (IsYearsSelected)
             {
                 Badges = new ObservableCollection<Badge>(_badgeService.getBadgesByYear(_currentDate.Year));
+                LoadBadgesPair();
                 SelectedDatePreview = _currentDate.ToString("yyyy");
             }
             else if (IsMonthsSelected)
             {
                 Badges = new ObservableCollection<Badge>(_badgeService.getBadgesByMonthYear(_currentDate.Month, _currentDate.Year));
+                LoadBadgesPair();
                 SelectedDatePreview = _currentDate.ToString("yyyy-MM");
             }
             else if (IsDaysSelected)
             {
                 Badges = new ObservableCollection<Badge>(_badgeService.getBadgesByDayMonthYear(_currentDate.Day, _currentDate.Month, _currentDate.Year));
+                LoadBadgesPair();
                 SelectedDatePreview = _currentDate.ToString("yyyy-MM-dd");
             }
         }
