@@ -18,4 +18,14 @@
     <sys:String x:Key="Years">Years</sys:String>
     <sys:String x:Key="Months">Months</sys:String>
     <sys:String x:Key="Days">Days</sys:String>
+    <sys:String x:Key="TitleBadge">My Badges</sys:String>
+    <sys:String x:Key="TotalHours">Total badge hours</sys:String>
+    <sys:String x:Key="Status">Status</sys:String>
+    <sys:String x:Key="RemainingHours">Remaining hours</sys:String>
+    <sys:String x:Key="OvertimeHours">Overtime hours</sys:String>
+    <sys:String x:Key="Information">Information</sys:String>
+    <sys:String x:Key="Work">Work</sys:String>
+    <sys:String x:Key="Break">Break</sys:String>
+    <sys:String x:Key="MinHoursLeave">Minimum leave hour</sys:String>
+    <sys:String x:Key="Unknown">Unknown</sys:String>
 </ResourceDictionary>

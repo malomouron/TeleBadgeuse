@@ -7,6 +7,7 @@ using System.Windows.Input;
 using CommunityToolkit.Mvvm.Input;
 using TeleBadgeuse.Data;
 using TeleBadgeuse.Model;
+using System.Windows;
 
 namespace TeleBadgeuse
 {
@@ -24,9 +25,13 @@ namespace TeleBadgeuse
         private readonly ProfilePage _profilePage;
         private bool _isViewListSelected;
         private bool _isViewGridSelected;
-        private bool _isViewModuleSelected;
-        private bool _isTimelineSelected;
+
+        private bool _status;
         
+        public bool IsInfoDisplay
+        {
+            get => IsDaysSelected;
+        }
         public bool IsViewListSelected
         {
             get => _isViewListSelected;
@@ -34,7 +39,6 @@ namespace TeleBadgeuse
             {
                 _isViewListSelected = value;
                 OnPropertyChanged();
-                UpdateView();
             }
         }
 
@@ -45,62 +49,17 @@ namespace TeleBadgeuse
             {
                 _isViewGridSelected = value;
                 OnPropertyChanged();
-                UpdateView();
             }
         }
-
-        public bool IsViewModuleSelected
-        {
-            get => _isViewModuleSelected;
-            set
-            {
-                _isViewModuleSelected = value;
-                OnPropertyChanged();
-                UpdateView();
-            }
-        }
-
-        public bool IsTimelineSelected
-        {
-            get => _isTimelineSelected;
-            set
-            {
-                _isTimelineSelected = value;
-                OnPropertyChanged();
-                UpdateView();
-            }
-        }
-        
-        private void UpdateView()
-        {
-            // Update the ItemsSource of the DataGrid based on the selected view
-            if (IsViewListSelected)
-            {
-                // Set ItemsSource for list view
-            }
-            else if (IsViewGridSelected)
-            {
-                // Set ItemsSource for grid view
-            }
-            else if (IsViewModuleSelected)
-            {
-                // Set ItemsSource for module view
-            }
-            else if (IsTimelineSelected)
-            {
-                // Set ItemsSource for timeline view
-            }
-        }
-
 
         public BadgeViewModel(IBadgeService badgeService, ProfilePage profilePage = null)
         {
             _badgeService = badgeService;
             _currentDate = DateTime.Now;
-            LoadBadges();
-            LoadBadgesPair();
             IsAllSelected = true; // Default selection
             IsViewListSelected = true; // Default selection
+            LoadBadges();
+            LoadBadgesPair();
             _profilePage = profilePage;
             
         }
@@ -129,7 +88,7 @@ namespace TeleBadgeuse
                     }
                 }
                 OnPropertyChanged();
-                FilterBadges();
+                LoadBadges();
             }
         }
 
@@ -150,7 +109,7 @@ namespace TeleBadgeuse
                     }
                 }
                 OnPropertyChanged();
-                FilterBadges();
+                LoadBadges();
             }
         }
 
@@ -171,7 +130,7 @@ namespace TeleBadgeuse
                     }
                 }
                 OnPropertyChanged();
-                FilterBadges();
+                LoadBadges();
             }
         }
 
@@ -193,7 +152,8 @@ namespace TeleBadgeuse
                     }
                 }
                 OnPropertyChanged();
-                FilterBadges();
+                OnPropertyChanged(nameof(IsInfoDisplay));
+                LoadBadges();
             }
         }
 
@@ -230,26 +190,21 @@ namespace TeleBadgeuse
         public ICommand IncrementCommand => new RelayCommand(IncrementDate);
         public ICommand DecrementCommand => new RelayCommand(DecrementDate);
 
-        private void LoadBadges()
-        {
-            Badges = new ObservableCollection<Badge>(_badgeService.GetAllBadges());
-        }
-
         private void LoadBadgesPair()
         {
-            ObservableCollection<BadgePair> mergedBadges = new ObservableCollection<BadgePair>();
-            ObservableCollection<Badge> badgesIsStart = new ObservableCollection<Badge>(Badges.Where(b => b.IsStart));
-            ObservableCollection<Badge> badgesIsEnd = new ObservableCollection<Badge>(Badges.Where(b => b.IsEnd));
-            int maxCount = Math.Max(badgesIsStart.Count, badgesIsEnd.Count);
-            for (int i = 0; i < maxCount; i++)
+            var badgesIsStart = Badges.Where(b => b.IsStart).ToList();
+            var badgesIsEnd = Badges.Where(b => b.IsEnd).ToList();
+            var maxCount = Math.Max(badgesIsStart.Count, badgesIsEnd.Count);
+            var mergedBadges = new ObservableCollection<BadgePair>(Enumerable.Range(0, maxCount).Select(i => new BadgePair
             {
-                mergedBadges.Add(new BadgePair
-                {
-                    StartBadge = i < badgesIsStart.Count ? badgesIsStart[i] : null,
-                    EndBadge = i < badgesIsEnd.Count ? badgesIsEnd[i] : null
-                });
-            }
+                StartBadge = i < badgesIsStart.Count ? badgesIsStart[i] : null,
+                EndBadge = i < badgesIsEnd.Count ? badgesIsEnd[i] : null
+            }));
             BadgePairs = mergedBadges;
+            OnPropertyChanged(nameof(TotalHours));
+            OnPropertyChanged(nameof(RemainingHours));
+            UpdateStatus();
+            VerifData();
         }
 
         private void AddBadge(bool isStart)
@@ -271,32 +226,125 @@ namespace TeleBadgeuse
             _badgeService.DeleteBadge(id);
             LoadBadges();
         }
-        
-        
 
-        private void FilterBadges()
+        public double TotalHours
+        {
+            get
+            {
+                double hours = 0;
+                foreach (var badge in BadgePairs)
+                {
+                    if (badge.StartBadge != null && badge.EndBadge != null)
+                    {
+                        hours += badge.HoursDifference;
+                    }
+                    if (badge.StartBadge != null && badge.EndBadge == null)
+                    {
+                        hours += (DateTime.Now - badge.StartBadge?.Date)?.TotalHours ?? 0;
+                    }
+                }
+                return Math.Round(hours, 2);
+            }
+        }
+
+        public double RemainingHours
+        {
+            get
+            {
+                if (double.TryParse(SettingsPage.SettingsViewModel.SelectSettingsKey("MinHours")?.Value, out double minHours))
+                {
+                    return Math.Round(Math.Max(minHours - TotalHours , 0), 2);
+                }
+                return Math.Round(TotalHours, 2);
+            }
+        }
+
+        public double ExtraHours
+        {
+            get
+            {
+                if (double.TryParse(SettingsPage.SettingsViewModel.SelectSettingsKey("MinHours")?.Value, out double minHours))
+                {
+                    return Math.Round(Math.Max(TotalHours - minHours, 0), 2);
+                }
+                return 0;
+            }
+        }
+
+
+        public string Status
+        {
+            get { return _status ? (string)Application.Current.Resources["Work"] : (string)Application.Current.Resources["Break"]; }
+        }
+
+        public string HoursMinToLeave
+        {
+            get {
+                if (_status)
+                {
+                    int heure = (int)Math.Round(RemainingHours, 0) + DateTime.Now.Hour;
+                    int minute = (int)Math.Round((RemainingHours - Math.Floor(RemainingHours)) * 60, 0) + DateTime.Now.Minute;
+                    if (minute >= 60)
+                    {
+                        minute -= 60;
+                        heure += 1;
+                    }
+                    return new DateTime(1, 1, 1, heure, minute, 0).ToString("HH:mm");
+                }
+                else
+                {
+                    return (string)Application.Current.Resources["Unknown"];
+                }
+            }
+        }
+
+        public void VerifData()
+        {
+            foreach (var badge in BadgePairs)
+            {
+                if (badge.StartBadge == null && badge.EndBadge != null)
+                {
+                    throw new Exception("End badge without start badge");
+                }
+                if (badge.StartBadge != null && badge.EndBadge != null && badge.StartBadge.Date > badge.EndBadge.Date)
+                {
+                    throw new Exception("Start badge after end badge");
+                }
+            }
+        }
+
+
+        public void UpdateStatus()
+        {
+            var lastBadge = BadgePairs.LastOrDefault();
+            _status = lastBadge != null && lastBadge.StartBadge != null && lastBadge.EndBadge == null;
+            OnPropertyChanged(nameof(Status));
+        }
+
+
+        private void LoadBadges()
         {
             if (IsAllSelected)
             {
-                Badges = new ObservableCollection<Badge>(_badgeService.GetAllBadges());
+                Badges = new ObservableCollection<Badge>(_badgeService.GetAllBadges().OrderBy(b => b.Date));
                 LoadBadgesPair();
                 SelectedDatePreview = string.Empty;
             }
             else if (IsYearsSelected)
             {
-                Badges = new ObservableCollection<Badge>(_badgeService.getBadgesByYear(_currentDate.Year));
+                Badges = new ObservableCollection<Badge>(_badgeService.getBadgesByYear(_currentDate.Year).OrderBy(b => b.Date));
                 LoadBadgesPair();
                 SelectedDatePreview = _currentDate.ToString("yyyy");
             }
             else if (IsMonthsSelected)
             {
-                Badges = new ObservableCollection<Badge>(_badgeService.getBadgesByMonthYear(_currentDate.Month, _currentDate.Year));
+                Badges = new ObservableCollection<Badge>(_badgeService.getBadgesByMonthYear(_currentDate.Month, _currentDate.Year).OrderBy(b => b.Date));
                 LoadBadgesPair();
                 SelectedDatePreview = _currentDate.ToString("yyyy-MM");
             }
             else if (IsDaysSelected)
             {
-                Badges = new ObservableCollection<Badge>(_badgeService.getBadgesByDayMonthYear(_currentDate.Day, _currentDate.Month, _currentDate.Year));
+                Badges = new ObservableCollection<Badge>(_badgeService.getBadgesByDayMonthYear(_currentDate.Day, _currentDate.Month, _currentDate.Year).OrderBy(b => b.Date));
                 LoadBadgesPair();
                 SelectedDatePreview = _currentDate.ToString("yyyy-MM-dd");
             }
@@ -316,7 +364,7 @@ namespace TeleBadgeuse
             {
                 _currentDate = _currentDate.AddDays(1);
             }
-            FilterBadges();
+            LoadBadges();
         }
 
         private void DecrementDate()
@@ -333,7 +381,7 @@ namespace TeleBadgeuse
             {
                 _currentDate = _currentDate.AddDays(-1);
             }
-            FilterBadges();
+            LoadBadges();
         }
 
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)

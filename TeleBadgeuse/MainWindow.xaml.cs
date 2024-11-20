@@ -75,6 +75,10 @@ namespace TeleBadgeuse
             {
                 SettingsPage.SettingsViewModel.AddSettingsCommand.Execute(("Language", "fr"));
             }
+            if (SettingsPage.SettingsViewModel.SelectSettingsKey("MinHours") == null)
+            {
+                SettingsPage.SettingsViewModel.AddSettingsCommand.Execute(("MinHours", "7"));
+            }
         }
 
         /// <summary>
