@@ -37,6 +37,10 @@ namespace TeleBadgeuse
             get => _isViewListSelected;
             set
             {
+                if (value)
+                {
+                    SettingsPage.SettingsViewModel.UpdateSettingsCommand.Execute(("ViewSelected", "ViewList"));
+                }
                 _isViewListSelected = value;
                 OnPropertyChanged();
             }
@@ -47,6 +51,9 @@ namespace TeleBadgeuse
             get => _isViewGridSelected;
             set
             {
+                if (value) {
+                    SettingsPage.SettingsViewModel.UpdateSettingsCommand.Execute(("ViewSelected", "ViewGrid"));
+                }
                 _isViewGridSelected = value;
                 OnPropertyChanged();
             }
@@ -56,8 +63,20 @@ namespace TeleBadgeuse
         {
             _badgeService = badgeService;
             _currentDate = DateTime.Now;
-            IsAllSelected = true; // Default selection
-            IsViewListSelected = true; // Default selection
+            IsDaysSelected = true; // Default selection
+
+            switch (SettingsPage.SettingsViewModel.SelectSettingsKey("ViewSelected")?.Value)
+            {
+                case "ViewGrid":
+                    IsViewGridSelected = true;
+                    break;
+                case "ViewList":
+                    IsViewListSelected = true;
+                    break;
+                default:
+                    IsViewListSelected = true;
+                    break;
+            }
             LoadBadges();
             LoadBadgesPair();
             _profilePage = profilePage;

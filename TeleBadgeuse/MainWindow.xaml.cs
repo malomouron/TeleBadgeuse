@@ -79,6 +79,10 @@ namespace TeleBadgeuse
             {
                 SettingsPage.SettingsViewModel.AddSettingsCommand.Execute(("MinHours", "7"));
             }
+            if (SettingsPage.SettingsViewModel.SelectSettingsKey("ViewSelected") == null)
+            {
+                SettingsPage.SettingsViewModel.AddSettingsCommand.Execute(("ViewSelected", "ViewGrid"));
+            }
         }
 
         /// <summary>

@@ -14,7 +14,6 @@ namespace TeleBadgeuse
             InitializeComponent();
             _badgeViewModel = new BadgeViewModel(new BadgeService(MainWindow.dbPath), this);
             DataContext = _badgeViewModel;
-            _badgeViewModel.IsDaysSelected = true;
         }
         
         
@@ -26,6 +25,6 @@ namespace TeleBadgeuse
         public void TurnOn()
         {
             AddTime.Visibility = System.Windows.Visibility.Visible;
-        }
+        }   
     }
 }
