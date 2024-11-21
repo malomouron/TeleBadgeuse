@@ -9,11 +9,7 @@ namespace TeleBadgeuse
     /// </summary>
     public partial class SettingsPage 
     {
-        
-        
-        private const string dbPath = "Data Source=./data.db";
-        
-        private static SettingsViewModel _settingsViewModel = new SettingsViewModel(new SettingsService(dbPath));
+        private static SettingsViewModel _settingsViewModel = new SettingsViewModel(new SettingsService(MainWindow.dbPath));
         
         public static SettingsViewModel SettingsViewModel
         {

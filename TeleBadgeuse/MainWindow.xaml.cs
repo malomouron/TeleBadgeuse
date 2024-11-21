@@ -8,11 +8,14 @@ using TeleBadgeuse.Ressources;
 
 namespace TeleBadgeuse
 {
+    
     /// <summary>
     /// Logique d'interaction pour MainWindow.xaml
     /// </summary>
     public partial class MainWindow
     {
+        public const string dbPath = "Data Source=./data.db";
+        
         #region Attributs
         /// <summary>
         /// Indique si le bouton de navigation est activé.
@@ -71,6 +74,14 @@ namespace TeleBadgeuse
             if (SettingsPage.SettingsViewModel.SelectSettingsKey("Language") == null)
             {
                 SettingsPage.SettingsViewModel.AddSettingsCommand.Execute(("Language", "fr"));
+            }
+            if (SettingsPage.SettingsViewModel.SelectSettingsKey("MinHours") == null)
+            {
+                SettingsPage.SettingsViewModel.AddSettingsCommand.Execute(("MinHours", "7"));
+            }
+            if (SettingsPage.SettingsViewModel.SelectSettingsKey("ViewSelected") == null)
+            {
+                SettingsPage.SettingsViewModel.AddSettingsCommand.Execute(("ViewSelected", "ViewGrid"));
             }
         }
 

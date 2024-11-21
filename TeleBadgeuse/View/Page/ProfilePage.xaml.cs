@@ -1,9 +1,30 @@
-﻿namespace TeleBadgeuse;
+﻿using System.IO;
+using System.Windows;
+using System.Windows.Controls;
+using TeleBadgeuse.Model;
 
-public partial class ProfilePage
+namespace TeleBadgeuse
 {
-    public ProfilePage()
+    public partial class ProfilePage : Page
     {
-        InitializeComponent();
+        private BadgeViewModel _badgeViewModel;
+
+        public ProfilePage()
+        {
+            InitializeComponent();
+            _badgeViewModel = new BadgeViewModel(new BadgeService(MainWindow.dbPath), this);
+            DataContext = _badgeViewModel;
+        }
+        
+        
+        public void TurnOff()
+        {
+            AddTime.Visibility = System.Windows.Visibility.Hidden;
+        }
+
+        public void TurnOn()
+        {
+            AddTime.Visibility = System.Windows.Visibility.Visible;
+        }   
     }
 }

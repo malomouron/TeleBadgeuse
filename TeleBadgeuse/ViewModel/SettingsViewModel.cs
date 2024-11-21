@@ -17,6 +17,7 @@ public class SettingsViewModel : INotifyPropertyChanged
     private bool _darkTheme;
     private string _imageSource = null!;
     private BitmapImage _icon;
+    private int _nbrHoursDays;
 
     public SettingsViewModel(ISettingsService settingsService)
     {
@@ -31,7 +32,16 @@ public class SettingsViewModel : INotifyPropertyChanged
         {
             _darkTheme = SelectSettingsKey("Theme").Value == "DarkTheme";
         }
-        
+
+        if (_settingsService.GetSettings("MinHours") == null)
+        {
+            NbrHoursDays = 0;
+        }
+        else
+        {
+            NbrHoursDays = int.Parse(SelectSettingsKey("MinHours").Value);
+        }
+
         UpdateImageSource();
         UpdateIcon();
     }
@@ -59,6 +69,20 @@ public class SettingsViewModel : INotifyPropertyChanged
                 UpdateImageSource();
                 UpdateIcon();
                 UpdateSettingsCommand.Execute(("Theme", _darkTheme ? "DarkTheme" : "LightTheme"));
+            }
+        }
+    }
+
+    public int NbrHoursDays
+    {
+        get => _nbrHoursDays;
+        set
+        {
+            if (_nbrHoursDays != value)
+            {
+                _nbrHoursDays = value;
+                OnPropertyChanged();
+                UpdateSettingsCommand.Execute(("MinHours", _nbrHoursDays.ToString()));
             }
         }
     }
