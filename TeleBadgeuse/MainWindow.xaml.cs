@@ -13,6 +13,8 @@ namespace TeleBadgeuse
     /// </summary>
     public partial class MainWindow
     {
+        public const string dbPath = "Data Source=./data.db";
+        
         #region Attributs
         /// <summary>
         /// Indique si le bouton de navigation est activé.
@@ -38,7 +40,7 @@ namespace TeleBadgeuse
 
             DataContext = SettingsPage.SettingsViewModel;
             
-            //display settings
+            // Affiche les paramètres
             foreach (Settings settings in SettingsPage.SettingsViewModel.Settings)
             {
                 Console.WriteLine(settings.Key + " : " + settings.Value);
@@ -49,6 +51,9 @@ namespace TeleBadgeuse
 
         #region Méthodes
         
+        /// <summary>
+        /// Initialise la fenêtre principale.
+        /// </summary>
         private void InitMainWindow()
         {
             this.SetBinding(IconProperty, new Binding("Icon") { Source = SettingsPage.SettingsViewModel });
@@ -58,6 +63,9 @@ namespace TeleBadgeuse
             MainFrame.Source = new Uri(SettingsPage.SettingsViewModel.SelectSettingsKey("DefaultPage").Value, UriKind.Relative);
         }
         
+        /// <summary>
+        /// Initialise les paramètres.
+        /// </summary>
         private void InitSettings()
         {
             if (SettingsPage.SettingsViewModel.SelectSettingsKey("Theme") == null)
@@ -71,6 +79,14 @@ namespace TeleBadgeuse
             if (SettingsPage.SettingsViewModel.SelectSettingsKey("Language") == null)
             {
                 SettingsPage.SettingsViewModel.AddSettingsCommand.Execute(("Language", "fr"));
+            }
+            if (SettingsPage.SettingsViewModel.SelectSettingsKey("MinHours") == null)
+            {
+                SettingsPage.SettingsViewModel.AddSettingsCommand.Execute(("MinHours", "7"));
+            }
+            if (SettingsPage.SettingsViewModel.SelectSettingsKey("ViewSelected") == null)
+            {
+                SettingsPage.SettingsViewModel.AddSettingsCommand.Execute(("ViewSelected", "ViewGrid"));
             }
         }
 
@@ -88,6 +104,11 @@ namespace TeleBadgeuse
             }
         }
 
+        /// <summary>
+        /// Gère l'événement de clic sur le bouton de bascule.
+        /// </summary>
+        /// <param name="sender">L'objet source de l'événement.</param>
+        /// <param name="e">Les données d'événement de clic.</param>
         private void ToggleButton_Click(object sender, RoutedEventArgs e)
         {
             ResourceDictionary resource = new ResourceDictionary
@@ -96,7 +117,7 @@ namespace TeleBadgeuse
             };
             if (_isToggled)
             {
-                // Revert to initial state
+                // Revenir à l'état initial
                 MainFrame.SetValue(Grid.ColumnSpanProperty, 2);
                 MainFrame.SetValue(Grid.ColumnProperty, 1);
                 LeftNavBar.SetValue(Grid.ColumnSpanProperty, 1);
@@ -108,7 +129,7 @@ namespace TeleBadgeuse
             }
             else
             {
-                // Toggle to new state
+                // Basculer vers le nouvel état
                 MainFrame.SetValue(Grid.ColumnSpanProperty, 1);
                 MainFrame.SetValue(Grid.ColumnProperty, 2);
                 LeftNavBar.SetValue(Grid.ColumnSpanProperty, 2);

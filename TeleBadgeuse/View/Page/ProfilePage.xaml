@@ -1,8 +1,165 @@
 ﻿<!-- ProfilePage.xaml -->
 <Page x:Class="TeleBadgeuse.ProfilePage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:webview2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf">
+    <!-- Ressources de la page -->
+    <Page.Resources>
+        <ResourceDictionary Source="pack://application:,,,/Ressources/Style.xaml" />
+    </Page.Resources>
     <Grid>
-        <TextBlock Text="Profile Page" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        <Grid.Resources>
+            <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        </Grid.Resources>
+        <!-- Définition des colonnes de la grille -->
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <!-- Définition des lignes de la grille -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.12*"/>
+            <RowDefinition Height="0.4*"/>
+            <RowDefinition Height="0.4*"/>
+            <RowDefinition Height="0.1*"/>
+            <RowDefinition Height="0.5*"/>
+            <RowDefinition Height="0.1*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="1.5*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Boutons radio pour le filtre -->
+        <StackPanel Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <RadioButton Content="{DynamicResource All}" Style="{StaticResource CustomRadioButtonStyleLeft}" GroupName="Filter" IsChecked="{Binding IsAllSelected}"/>
+            <RadioButton Content="{DynamicResource Years}" Style="{StaticResource CustomRadioButtonStyle}" GroupName="Filter" IsChecked="{Binding IsYearsSelected}" />
+            <RadioButton Content="{DynamicResource Months}" Style="{StaticResource CustomRadioButtonStyle}" GroupName="Filter" IsChecked="{Binding IsMonthsSelected}"/>
+            <RadioButton Content="{DynamicResource Days}" Style="{StaticResource CustomRadioButtonStyleRight}" GroupName="Filter" IsChecked="{Binding IsDaysSelected}"/>
+        </StackPanel>
+
+        <!-- Boutons de navigation -->
+        <StackPanel x:Name="AddTime" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Button Style="{StaticResource ModifDateLeft}" Content="-" Command="{Binding DecrementCommand}"/>
+            <!-- Aperçu de la date -->
+            <Border Style="{StaticResource ModifDateBorder}" Width="100">
+                <TextBlock Style="{StaticResource ModifDate}" Text="{Binding SelectedDatePreview}" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center"/>
+            </Border>
+            <Button Style="{StaticResource ModifDateRight}" Content="+" Command="{Binding IncrementCommand}"/>
+        </StackPanel>
+        
+        <!-- Boutons de vue -->
+        <StackPanel Grid.Row="1" Grid.RowSpan="2" Grid.Column="3" Orientation="Vertical" HorizontalAlignment="Right" VerticalAlignment="Center">
+            <RadioButton GroupName="View" Style="{StaticResource CustomRadioButtonStyleTop}" Content="{materialDesign:PackIcon Kind=ViewList}" IsChecked="{Binding IsViewListSelected}"/>
+            <RadioButton GroupName="View" Style="{StaticResource CustomRadioButtonStyleBottom}" Content="{materialDesign:PackIcon Kind=ViewGrid}" IsChecked="{Binding IsViewGridSelected}"/>
+        </StackPanel>
+
+        <!-- Titre -->
+        <TextBlock Grid.Column="2" Grid.ColumnSpan="2"  Grid.Row="4" TextAlignment="Center" Text="{DynamicResource TitleBadge}" Style="{StaticResource Title1}" />
+
+        <!-- DataGrid -->
+        <DataGrid Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="6" ItemsSource="{Binding Badges}" AutoGenerateColumns="False" IsReadOnly="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="{Binding IsViewListSelected, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="*"/>
+                <DataGridTextColumn Header="Date" Binding="{Binding Date}" Width="*"/>
+                <DataGridTextColumn Header="Is Start" Binding="{Binding IsStart}" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        
+        <!-- ListView -->
+        <ListView Style="{StaticResource ListView}" Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="6" ItemsSource="{Binding BadgePairs}" Visibility="{Binding IsViewGridSelected, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <ListView.Resources>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="Background" Value="Transparent"/>
+                    <Setter Property="Foreground" Value="{DynamicResource ForegroundBrush}"/>
+                    <Setter Property="Padding" Value="10"/>
+                    <Setter Property="BorderBrush" Value="Transparent"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="ListViewItem">
+                                <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="0">
+                                    <ContentPresenter />
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="Transparent"/>
+                            <Setter Property="BorderBrush" Value="Transparent"/>
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" Value="Transparent"/>
+                            <Setter Property="BorderBrush" Value="Transparent"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </ListView.Resources>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <!-- Colonnes pour StartBadge -->
+                            <ColumnDefinition Width="2*" />
+                            <ColumnDefinition Width="3*" />
+                            <ColumnDefinition Width="*" />
+                            <!-- Espacement -->
+                            <ColumnDefinition Width="20" />
+                            <!-- Colonnes pour EndBadge -->
+                            <ColumnDefinition Width="2*" />
+                            <ColumnDefinition Width="3*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <!-- StartBadge -->
+                        <TextBlock Margin="1" Grid.Column="1" Text="{Binding StartBadge.Date, StringFormat=dd/MM/yyyy HH:mm}" />
+
+                        <!-- Espacement -->
+                        <TextBlock Grid.Column="3" Text="|" HorizontalAlignment="Center" />
+
+                        <!-- EndBadge -->
+                        <TextBlock Margin="1" Grid.Column="5" Text="{Binding EndBadge.Date, StringFormat=dd/MM/yyyy HH:mm}" />
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <!-- Informations supplémentaires -->
+        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Top" Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="7" Visibility="{Binding IsInfoDisplay, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2.2*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="2.2*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="0.1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Style="{StaticResource Title2}" TextAlignment="Center" Text="{DynamicResource Information}" Grid.Row="1" Grid.ColumnSpan="4" />
+
+            <TextBlock Grid.Column="0" Style="{StaticResource Info}" Grid.Row="3" Text="{DynamicResource TotalHours}"/>
+            <TextBlock Grid.Column="1" Style="{StaticResource Info}" Grid.Row="3" Text="{Binding TotalHours}"/>
+
+            <TextBlock Grid.Column="0" Style="{StaticResource Info}" Grid.Row="4" Text="{DynamicResource Status}"/>
+            <TextBlock Grid.Column="1" Style="{StaticResource Info}" Grid.Row="4" Text="{Binding Status}"/>
+
+            <TextBlock Grid.Column="2" Style="{StaticResource Info}" Grid.Row="3" Text="{DynamicResource RemainingHours}" />
+            <TextBlock Grid.Column="3" Style="{StaticResource Info}" Grid.Row="3" Text="{Binding RemainingHours}"/>
+
+            <TextBlock Grid.Column="2" Style="{StaticResource Info}" Grid.Row="4" Text="{DynamicResource OvertimeHours}" />
+            <TextBlock Grid.Column="3" Style="{StaticResource Info}" Grid.Row="4" Text="{Binding ExtraHours}"/>
+
+            <TextBlock Grid.Column="0" Style="{StaticResource Info}" Grid.Row="5" Text="{DynamicResource MinHoursLeave}" />
+            <TextBlock Grid.Column="1" Style="{StaticResource Info}" Grid.Row="5" Text="{Binding HoursMinToLeave}"/>
+        </Grid>
     </Grid>
 </Page>

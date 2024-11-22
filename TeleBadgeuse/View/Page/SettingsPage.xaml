@@ -2,23 +2,79 @@
 <Page x:Class="TeleBadgeuse.SettingsPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!-- Ressources de la page -->
+    <Page.Resources>
+        <ResourceDictionary Source="pack://application:,,,/Ressources/Style.xaml" />
+    </Page.Resources>
+    <!-- Grille principale -->
     <Grid>
+        <!-- Définition des lignes de la grille -->
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+        <!-- Définition des colonnes de la grille -->
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="0.5*"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="2*"/>
         </Grid.ColumnDefinitions>
-        <ComboBox Grid.Row="1" x:Name="LanguageComboBox" SelectionChanged="LanguageComboBox_SelectionChanged"  Width="120" Height="21" >
+
+        <!-- Titre des paramètres -->
+        <TextBlock Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Text="{DynamicResource Settings}" Style="{StaticResource Title1}" />
+
+        <!-- Choix de la langue -->
+        <TextBlock Style="{StaticResource ParamLabelStyle}" Text="{DynamicResource ChoseLang}" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10"/>
+        <ComboBox Grid.Row="3" Grid.Column="2" 
+                  x:Name="LanguageComboBox"
+                  HorizontalAlignment="Left" VerticalAlignment="Top" 
+                  SelectionChanged="LanguageComboBox_SelectionChanged"
+                  Margin="10" Width="120"
+                  Style="{DynamicResource theComboBox}"
+                  ItemContainerStyle="{DynamicResource theComboBoxItem}">
             <ComboBoxItem Content="{DynamicResource LangFr}"/>
             <ComboBoxItem Content="{DynamicResource LangEn}"/>
         </ComboBox>
-        <CheckBox Grid.Row="2" Content="{DynamicResource DarkTheme}" 
+
+        <!-- Thème sombre -->
+        <TextBlock Style="{StaticResource ParamLabelStyle}" Text="{DynamicResource DarkTheme}" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10"/>
+        <CheckBox Style="{StaticResource CustomCheckBoxStyle}" Grid.Row="4" Grid.Column="2" 
                   IsChecked="{Binding DarkTheme, Mode=TwoWay}" 
-                  HorizontalAlignment="Center" VerticalAlignment="Top" 
+                  HorizontalAlignment="Left" VerticalAlignment="Top" 
                   Margin="10"
                   Foreground="{DynamicResource ForegroundBrush}"/>
+
+        <!-- Nombre d'heures dans une journée -->
+        <TextBlock Style="{StaticResource ParamLabelStyle}" Text="{DynamicResource NbrHoursInDay}" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10"/>
+        <TextBox Grid.Row="5" Grid.Column="2" 
+                 x:Name="NumberInput" 
+                 Width="120" Height="21" 
+                 HorizontalAlignment="Left" VerticalAlignment="Top" 
+                 Margin="10"
+                 Text="{Binding NbrHoursDays, Mode=TwoWay}" 
+                 Background="{x:Null}" 
+                 SelectionBrush="{x:Null}" 
+                 SelectionTextBrush="{x:Null}" 
+                 BorderThickness="1"
+                 FocusVisualStyle="{x:Null}">
+            <TextBox.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="3"/>
+                </Style>
+            </TextBox.Resources>
+            <TextBox.BorderBrush>
+                <SolidColorBrush Color="{StaticResource AccentColor}"/>
+            </TextBox.BorderBrush>
+            <TextBox.Foreground>
+                <SolidColorBrush Color="{StaticResource AccentColor}"/>
+            </TextBox.Foreground>
+        </TextBox>
     </Grid>
 </Page>

@@ -9,20 +9,25 @@ namespace TeleBadgeuse.Ressources
     {
         #region Attributs
 
+        #region _currentCulture
         /// <summary>
         /// Culture actuelle de l'application.
         /// </summary>
-        private static string _currentCulture ;
+        private static string _currentCulture;
+        #endregion
 
+        #region _currentTheme
         /// <summary>
         /// Thème actuel de l'application.
         /// </summary>
         private static string _currentTheme = "DarkTheme";
+        #endregion
 
         #endregion
 
         #region Méthodes
 
+        #region SetCulture
         /// <summary>
         /// Définit la culture de l'application et met à jour les ressources.
         /// </summary>
@@ -32,7 +37,9 @@ namespace TeleBadgeuse.Ressources
             _currentCulture = culture;
             UpdateResources();
         }
+        #endregion
 
+        #region SetTheme
         /// <summary>
         /// Définit le thème de l'application et met à jour les ressources.
         /// </summary>
@@ -42,7 +49,9 @@ namespace TeleBadgeuse.Ressources
             _currentTheme = theme;
             UpdateResources();
         }
+        #endregion
 
+        #region UpdateResources
         /// <summary>
         /// Met à jour les dictionnaires de ressources de l'application.
         /// </summary>
@@ -52,7 +61,9 @@ namespace TeleBadgeuse.Ressources
             Application.Current.Resources.MergedDictionaries.Add(ChargeCulture());
             Application.Current.Resources.MergedDictionaries.Add(ChargeTheme());
         }
+        #endregion
 
+        #region ChargeCulture
         /// <summary>
         /// Charge le dictionnaire de ressources pour la culture actuelle.
         /// </summary>
@@ -65,7 +76,9 @@ namespace TeleBadgeuse.Ressources
             };
             return dictionary;
         }
+        #endregion
 
+        #region ChargeTheme
         /// <summary>
         /// Charge le dictionnaire de ressources pour le thème actuel.
         /// </summary>
@@ -78,7 +91,9 @@ namespace TeleBadgeuse.Ressources
             };
             return dictionary;
         }
+        #endregion
 
+        #region ClearResources
         /// <summary>
         /// Efface tous les dictionnaires de ressources fusionnés de l'application.
         /// </summary>
@@ -86,6 +101,7 @@ namespace TeleBadgeuse.Ressources
         {
             Application.Current.Resources.MergedDictionaries.Clear();
         }
+        #endregion
 
         #endregion
     }
