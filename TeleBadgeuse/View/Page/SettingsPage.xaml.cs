@@ -14,7 +14,7 @@ namespace TeleBadgeuse
         public static SettingsViewModel SettingsViewModel
         {
             get => _settingsViewModel;
-            private set => _settingsViewModel = value;
+            set => _settingsViewModel = value;
         }
         #region Constructeur
 
@@ -36,7 +36,7 @@ namespace TeleBadgeuse
         /// </summary>
         /// <param name="sender">L'objet source de l'événement.</param>
         /// <param name="e">Les données d'événement de la sélection.</param>
-        private void LanguageComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        public void LanguageComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (sender is ComboBox comboBox && comboBox.SelectedItem is ComboBoxItem selectedItem)
             {

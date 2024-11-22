@@ -1,5 +1,6 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
@@ -23,6 +24,7 @@ public class SettingsViewModel : INotifyPropertyChanged
     private string _imageSource = null!;
     private BitmapImage _icon;
     private int _nbrHoursDays;
+    private bool test;
 
     #endregion
 
@@ -32,7 +34,7 @@ public class SettingsViewModel : INotifyPropertyChanged
     /// Constructeur de la classe SettingsViewModel.
     /// </summary>
     /// <param name="settingsService">Service de gestion des paramètres.</param>
-    public SettingsViewModel(ISettingsService settingsService)
+    public SettingsViewModel(ISettingsService settingsService, bool test = false)
     {
         _settingsService = settingsService;
         LoadSettings();
@@ -54,6 +56,7 @@ public class SettingsViewModel : INotifyPropertyChanged
         {
             NbrHoursDays = int.Parse(SelectSettingsKey("MinHours").Value);
         }
+        this.test = test;
 
         UpdateImageSource();
         UpdateIcon();
@@ -202,7 +205,7 @@ public class SettingsViewModel : INotifyPropertyChanged
     /// <summary>
     /// Charge les paramètres.
     /// </summary>
-    private void LoadSettings()
+    public void LoadSettings()
     {
         Settings = new ObservableCollection<Settings>(_settingsService.GetAllSettings());
     }
@@ -252,7 +255,11 @@ public class SettingsViewModel : INotifyPropertyChanged
     /// </summary>
     private void UpdateIcon()
     {
-        Icon = DarkTheme ? new BitmapImage(new Uri("pack://application:,,,/Ressources/Icons/IconDarkFull.ico")) : new BitmapImage(new Uri("pack://application:,,,/Ressources/Icons/IconLightFull.ico"));
+        var curentDir = Directory.GetCurrentDirectory();
+        if (!test)
+        {
+            Icon = DarkTheme ? new BitmapImage(new Uri("pack://application:,,,/Ressources/Icons/IconDarkFull.ico")) : new BitmapImage(new Uri("pack://application:,,,/Ressources/Icons/IconLightFull.ico"));
+        }
     }
 
     /// <summary>
@@ -261,7 +268,10 @@ public class SettingsViewModel : INotifyPropertyChanged
     private void UpdateTheme()
     {
         string theme = _darkTheme ? "DarkTheme" : "LightTheme";
-        Ressources.ResourceDictionaryManager.SetTheme(theme);
+        if (!test)
+        {
+            Ressources.ResourceDictionaryManager.SetTheme(theme);
+        }
     }
 
     #endregion

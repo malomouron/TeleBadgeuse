@@ -31,6 +31,8 @@ namespace TeleBadgeuse
         private bool _isViewListSelected;
         private bool _isViewGridSelected;
         private bool _status;
+        private bool test;
+        private SettingsViewModel svm = null;
 
         #endregion
 
@@ -46,7 +48,14 @@ namespace TeleBadgeuse
             {
                 if (value)
                 {
-                    SettingsPage.SettingsViewModel.UpdateSettingsCommand.Execute(("ViewSelected", "ViewList"));
+                    if (svm != null)
+                    {
+                        svm.UpdateSettingsCommand.Execute(("ViewSelected", "ViewList"));
+                    }
+                    else
+                    {
+                        SettingsPage.SettingsViewModel.UpdateSettingsCommand.Execute(("ViewSelected", "ViewList"));
+                    }
                 }
                 _isViewListSelected = value;
                 OnPropertyChanged();
@@ -62,7 +71,14 @@ namespace TeleBadgeuse
             set
             {
                 if (value) {
-                    SettingsPage.SettingsViewModel.UpdateSettingsCommand.Execute(("ViewSelected", "ViewGrid"));
+                    if (svm != null)
+                    {
+                        svm.UpdateSettingsCommand.Execute(("ViewSelected", "ViewGrid"));
+                    }
+                    else
+                    {
+                        SettingsPage.SettingsViewModel.UpdateSettingsCommand.Execute(("ViewSelected", "ViewGrid"));
+                    }
                 }
                 _isViewGridSelected = value;
                 OnPropertyChanged();
@@ -244,7 +260,8 @@ namespace TeleBadgeuse
         {
             get
             {
-                if (double.TryParse(SettingsPage.SettingsViewModel.SelectSettingsKey("MinHours")?.Value, out double minHours))
+                var settingsViewModel = svm ?? SettingsPage.SettingsViewModel;
+                if (double.TryParse(settingsViewModel.SelectSettingsKey("MinHours")?.Value, out double minHours))
                 {
                     return Math.Round(Math.Max(minHours - TotalHours, 0), 2);
                 }
@@ -259,7 +276,8 @@ namespace TeleBadgeuse
         {
             get
             {
-                if (double.TryParse(SettingsPage.SettingsViewModel.SelectSettingsKey("MinHours")?.Value, out double minHours))
+                var settingsViewModel = svm ?? SettingsPage.SettingsViewModel;
+                if (double.TryParse(settingsViewModel.SelectSettingsKey("MinHours")?.Value, out double minHours))
                 {
                     return Math.Round(Math.Max(TotalHours - minHours, 0), 2);
                 }
@@ -290,6 +308,10 @@ namespace TeleBadgeuse
                     {
                         minute -= 60;
                     }
+                    if (heure >= 24)
+                    {
+                        heure -= 24;
+                    }
                     return new DateTime(1, 1, 1, heure, minute, 0).ToString("HH:mm");
                 }
                 else
@@ -308,24 +330,65 @@ namespace TeleBadgeuse
         /// </summary>
         /// <param name="badgeService">Service de gestion des badges.</param>
         /// <param name="profilePage">Page de profil (optionnelle).</param>
-        public BadgeViewModel(IBadgeService badgeService, ProfilePage profilePage = null)
+        public BadgeViewModel(IBadgeService badgeService, ProfilePage profilePage = null, bool test = false)
         {
             _badgeService = badgeService;
             _currentDate = DateTime.Now;
             IsDaysSelected = true; // Sélection par défaut
-
-            switch (SettingsPage.SettingsViewModel.SelectSettingsKey("ViewSelected")?.Value)
+            this.test = test;
+            if (test)
             {
-                case "ViewGrid":
-                    IsViewGridSelected = true;
-                    break;
-                case "ViewList":
-                    IsViewListSelected = true;
-                    break;
-                default:
-                    IsViewListSelected = true;
-                    break;
+                svm = new SettingsViewModel(new SettingsService(MainWindow.dbPath), test);
+
+                if (svm.SelectSettingsKey("Theme") == null)
+                {
+                    svm.AddSettingsCommand.Execute(("Theme", "DarkTheme"));
+                }
+                if (svm.SelectSettingsKey("DefaultPage") == null)
+                {
+                    svm.AddSettingsCommand.Execute(("DefaultPage", "/View/Page/HomePage.xaml"));
+                }
+                if (svm.SelectSettingsKey("Language") == null)
+                {
+                    svm.AddSettingsCommand.Execute(("Language", "fr"));
+                }
+                if (svm.SelectSettingsKey("MinHours") == null)
+                {
+                    svm.AddSettingsCommand.Execute(("MinHours", "7"));
+                }
+                if (svm.SelectSettingsKey("ViewSelected") == null)
+                {
+                    svm.AddSettingsCommand.Execute(("ViewSelected", "ViewGrid"));
+                }
             }
+
+            if (svm == null)
+            {
+                switch (SettingsPage.SettingsViewModel.SelectSettingsKey("ViewSelected")?.Value)
+                {
+                    case "ViewGrid":
+                        IsViewGridSelected = true;
+                        break;
+                    case "ViewList":
+                    default:
+                        IsViewListSelected = true;
+                        break;
+                }
+            }
+            else if (svm.SelectSettingsKey("ViewSelected") != null)
+            {
+                switch (svm.SelectSettingsKey("ViewSelected")?.Value)
+                {
+                    case "ViewGrid":
+                        IsViewGridSelected = true;
+                        break;
+                    case "ViewList":
+                    default:
+                        IsViewListSelected = true;
+                        break;
+                }
+            }
+
             LoadBadges();
             LoadBadgesPair();
             _profilePage = profilePage;
@@ -371,7 +434,7 @@ namespace TeleBadgeuse
         /// <summary>
         /// Charge les paires de badges.
         /// </summary>
-        private void LoadBadgesPair()
+        public void LoadBadgesPair()
         {
             var badgesIsStart = Badges.Where(b => b.IsStart).ToList();
             var badgesIsEnd = Badges.Where(b => b.IsEnd).ToList();

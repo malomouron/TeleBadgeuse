@@ -30,7 +30,7 @@ namespace TeleBadgeuse
         /// </summary>
         /// <param name="sender">L'objet source de l'événement.</param>
         /// <param name="e">Les données d'événement de la souris.</param>
-        private void TitleBar_MouseDown(object sender, MouseButtonEventArgs e)
+        public void TitleBar_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton == MouseButton.Left)
             {
@@ -43,7 +43,7 @@ namespace TeleBadgeuse
         /// </summary>
         /// <param name="sender">L'objet source de l'événement.</param>
         /// <param name="e">Les données d'événement.</param>
-        private void Minimize_Click(object sender, RoutedEventArgs e)
+        public void Minimize_Click(object sender, RoutedEventArgs e)
         {
             var window = Window.GetWindow(this);
             if (window != null) window.WindowState = WindowState.Minimized;
@@ -54,7 +54,7 @@ namespace TeleBadgeuse
         /// </summary>
         /// <param name="sender">L'objet source de l'événement.</param>
         /// <param name="e">Les données d'événement.</param>
-        private void Maximize_Click(object sender, RoutedEventArgs e)
+        public void Maximize_Click(object sender, RoutedEventArgs e)
         {
             var window = Window.GetWindow(this);
             if (window != null)
@@ -68,7 +68,7 @@ namespace TeleBadgeuse
         /// </summary>
         /// <param name="sender">L'objet source de l'événement.</param>
         /// <param name="e">Les données d'événement.</param>
-        private void Close_Click(object sender, RoutedEventArgs e)
+        public void Close_Click(object sender, RoutedEventArgs e)
         {
             Window.GetWindow(this)?.Close();
         }

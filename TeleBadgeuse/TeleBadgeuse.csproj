@@ -11,7 +11,9 @@
 
   <ItemGroup>
     <None Remove="Ressources\Icons\IconDark.ico" />
+    <None Remove="Ressources\Icons\IconDarkFull.png" />
     <None Remove="Ressources\Icons\IconLight.ico" />
+    <None Remove="Ressources\Icons\IconLightFull.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -39,7 +41,13 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <None Remove="Ressources\Icons\IconLight.png" />
+    <Resource Include="Ressources\Icons\IconDarkFull.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Ressources\Icons\IconLight.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Ressources\Icons\IconLightFull.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <None Remove="Ressources\my_html.html" />

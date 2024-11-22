@@ -26,7 +26,7 @@ namespace TeleBadgeuse
         /// </summary>
         /// <param name="sender">L'objet source de l'événement.</param>
         /// <param name="e">Les données d'événement.</param>
-        private void HomeButton_Click(object sender, RoutedEventArgs e)
+        public void HomeButton_Click(object sender, RoutedEventArgs e)
         {
             ((MainWindow)Application.Current.MainWindow).MainFrame.Source = new Uri("/View/Page/HomePage.xaml", UriKind.Relative);
         }
@@ -36,7 +36,7 @@ namespace TeleBadgeuse
         /// </summary>
         /// <param name="sender">L'objet source de l'événement.</param>
         /// <param name="e">Les données d'événement.</param>
-        private void ProfileButton_Click(object sender, RoutedEventArgs e)
+        public void ProfileButton_Click(object sender, RoutedEventArgs e)
         {
             ((MainWindow)Application.Current.MainWindow).MainFrame.Source = new Uri("/View/Page/ProfilePage.xaml", UriKind.Relative);
         }
@@ -46,7 +46,7 @@ namespace TeleBadgeuse
         /// </summary>
         /// <param name="sender">L'objet source de l'événement.</param>
         /// <param name="e">Les données d'événement.</param>
-        private void SettingsButton_Click(object sender, RoutedEventArgs e)
+        public void SettingsButton_Click(object sender, RoutedEventArgs e)
         {
             ((MainWindow)Application.Current.MainWindow).MainFrame.Source = new Uri("/View/Page/SettingsPage.xaml", UriKind.Relative);
         }

@@ -10,14 +10,79 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Ressources\Icons\IconDark.ico" />
+    <None Remove="Ressources\Icons\IconDark.png" />
+    <None Remove="Ressources\Icons\IconDarkFull.ico" />
+    <None Remove="Ressources\Icons\IconDarkFull.png" />
+    <None Remove="Ressources\Icons\IconLight.ico" />
+    <None Remove="Ressources\Icons\IconLight.png" />
+    <None Remove="Ressources\Icons\IconLightFull.ico" />
+    <None Remove="Ressources\Icons\IconLightFull.png" />
+    <None Remove="Ressources\Strings\en.xaml" />
+    <None Remove="Ressources\Strings\fr.xaml" />
+    <None Remove="Ressources\Style.xaml" />
+    <None Remove="Ressources\Themes\DarkTheme.xaml" />
+    <None Remove="Ressources\Themes\LightTheme.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Ressources\Icons\IconDark.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Ressources\Icons\IconDarkFull.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Ressources\Icons\IconLight.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Ressources\Icons\IconLightFull.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="coverlet.collector" Version="6.0.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
+    <PackageReference Include="Moq" Version="4.20.72" />
     <PackageReference Include="xunit" Version="2.5.3" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.5.3" />
   </ItemGroup>
 
   <ItemGroup>
+    <Page Include="Ressources\Strings\en.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Ressources\Strings\fr.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Ressources\Style.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Ressources\Themes\DarkTheme.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Ressources\Themes\LightTheme.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\TeleBadgeuse\TeleBadgeuse.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Ressources\Icons\IconDark.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Ressources\Icons\IconDarkFull.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Ressources\Icons\IconLight.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Ressources\Icons\IconLightFull.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
   <ItemGroup>
