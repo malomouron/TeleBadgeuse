@@ -42,7 +42,7 @@ namespace TeleBadgeuse.Model
         /// <summary>
         /// Initialise la base de données en créant la table des badges si elle n'existe pas.
         /// </summary>
-        private void InitializeDatabase()
+        public void InitializeDatabase()
         {
             using (var connection = new SQLiteConnection(_connectionString))
             {

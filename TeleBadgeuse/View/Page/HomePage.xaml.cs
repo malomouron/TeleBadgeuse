@@ -45,7 +45,7 @@ public partial class HomePage
     /// <summary>
     /// Démarre l'horloge pour mettre à jour l'heure actuelle chaque seconde.
     /// </summary>
-    private void StartClock()
+    public void StartClock()
     {
         _timer = new DispatcherTimer
         {
@@ -63,7 +63,7 @@ public partial class HomePage
     /// <summary>
     /// Démarre un nouveau badge.
     /// </summary>
-    private void Start()
+    public void Start()
     {
         _badgeViewModel.AddBadgeCommand.Execute(true);
     }
@@ -71,7 +71,7 @@ public partial class HomePage
     /// <summary>
     /// Termine le badge en cours.
     /// </summary>
-    private void End()
+    public void End()
     {
         _badgeViewModel.AddBadgeCommand.Execute(false);
     }
@@ -82,7 +82,7 @@ public partial class HomePage
     /// <param name="message">Le message à afficher.</param>
     /// <param name="yesCommand">Commande à exécuter si l'utilisateur confirme.</param>
     /// <param name="noCommand">Commande à exécuter si l'utilisateur annule.</param>
-    private void ShowConfirmationPopup(string message, ICommand yesCommand, ICommand noCommand)
+    public void ShowConfirmationPopup(string message, ICommand yesCommand, ICommand noCommand)
     {
         var popupViewModel = new ConfirmationPopupViewModel(message, yesCommand, noCommand);
         var popup = new Popup { DataContext = popupViewModel };
@@ -95,7 +95,7 @@ public partial class HomePage
     /// </summary>
     /// <param name="message">Le message d'erreur à afficher.</param>
     /// <param name="okayCommand">Commande à exécuter si l'utilisateur confirme.</param>
-    private void ShowErrorPopup(string message, ICommand okayCommand)
+    public void ShowErrorPopup(string message, ICommand okayCommand)
     {
         var errorPopupViewModel = new ErrorPopupViewModel(message, okayCommand);
         var errorPopup = new PopupError { DataContext = errorPopupViewModel };
@@ -106,7 +106,7 @@ public partial class HomePage
     /// <summary>
     /// Cache la popup de confirmation.
     /// </summary>
-    private void HideConfirmationPopup()
+    public void HideConfirmationPopup()
     {
         PopupContentControl.Visibility = Visibility.Collapsed;
         PopupContentControl.Content = null;
@@ -121,7 +121,7 @@ public partial class HomePage
     /// </summary>
     /// <param name="sender">L'objet source de l'événement.</param>
     /// <param name="e">Les données d'événement de clic.</param>
-    private void Start_Click(object sender, RoutedEventArgs e)
+    public void Start_Click(object sender, RoutedEventArgs e)
     {
         var lastBadge = _badgeViewModel.Badges.LastOrDefault();
         if (lastBadge != null && lastBadge.IsStart)
@@ -142,7 +142,7 @@ public partial class HomePage
     /// </summary>
     /// <param name="sender">L'objet source de l'événement.</param>
     /// <param name="e">Les données d'événement de clic.</param>
-    private void End_Click(object sender, RoutedEventArgs e)
+    public void End_Click(object sender, RoutedEventArgs e)
     {
         var lastBadge = _badgeViewModel.Badges.LastOrDefault();
         if (lastBadge != null && !lastBadge.IsStart)
