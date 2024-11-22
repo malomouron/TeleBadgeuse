@@ -30,4 +30,7 @@
     <sys:String x:Key="Unknown">Inconnu</sys:String>
     <sys:String x:Key="ChoseLang">Choisissez votre langue</sys:String>
     <sys:String x:Key="NbrHoursInDay">Nombre d'heures par jour</sys:String>
+    <sys:String x:Key="Okay">D'accord</sys:String>
+    <sys:String x:Key="AlreadyEnd">Le dernier badge est déjà un badge de fin.</sys:String>
+    <sys:String x:Key="AlreadyStart">Le dernier badge est déjà un badge de début.</sys:String>
 </ResourceDictionary>

@@ -3,16 +3,45 @@ using TeleBadgeuse.Data;
 
 namespace TeleBadgeuse.Model
 {
+    #region Classe BadgeService
+    /// <summary>
+    /// Service pour gérer les opérations sur les badges.
+    /// </summary>
     public class BadgeService : IBadgeService
     {
-        private readonly string _connectionString;
+        #region Attributs
 
+        #region _connectionString
+        /// <summary>
+        /// Chaîne de connexion à la base de données SQLite.
+        /// </summary>
+        private readonly string _connectionString;
+        #endregion
+
+        #endregion
+
+        #region Constructeurs
+
+        #region BadgeService
+        /// <summary>
+        /// Initialise une nouvelle instance de la classe <see cref="BadgeService"/>.
+        /// </summary>
+        /// <param name="connectionString">La chaîne de connexion à la base de données.</param>
         public BadgeService(string connectionString)
         {
             _connectionString = connectionString;
             InitializeDatabase();
         }
+        #endregion
 
+        #endregion
+
+        #region Méthodes
+
+        #region InitializeDatabase
+        /// <summary>
+        /// Initialise la base de données en créant la table des badges si elle n'existe pas.
+        /// </summary>
         private void InitializeDatabase()
         {
             using (var connection = new SQLiteConnection(_connectionString))
@@ -29,7 +58,13 @@ namespace TeleBadgeuse.Model
                 command.ExecuteNonQuery();
             }
         }
+        #endregion
 
+        #region AddBadge
+        /// <summary>
+        /// Ajoute un nouveau badge à la base de données.
+        /// </summary>
+        /// <param name="badge">Le badge à ajouter.</param>
         public void AddBadge(Badge badge)
         {
             using (var connection = new SQLiteConnection(_connectionString))
@@ -42,7 +77,14 @@ namespace TeleBadgeuse.Model
                 command.ExecuteNonQuery();
             }
         }
+        #endregion
 
+        #region GetBadgeById
+        /// <summary>
+        /// Récupère un badge par son identifiant.
+        /// </summary>
+        /// <param name="id">L'identifiant du badge.</param>
+        /// <returns>Le badge correspondant à l'identifiant, ou null s'il n'existe pas.</returns>
         public Badge GetBadgeById(int id)
         {
             using (var connection = new SQLiteConnection(_connectionString))
@@ -66,7 +108,13 @@ namespace TeleBadgeuse.Model
             }
             return null;
         }
+        #endregion
 
+        #region GetAllBadges
+        /// <summary>
+        /// Récupère tous les badges de la base de données.
+        /// </summary>
+        /// <returns>Une collection de tous les badges.</returns>
         public IEnumerable<Badge> GetAllBadges()
         {
             var badges = new List<Badge>();
@@ -90,7 +138,14 @@ namespace TeleBadgeuse.Model
             }
             return badges;
         }
+        #endregion
 
+        #region getBadgesByYear
+        /// <summary>
+        /// Récupère les badges par année.
+        /// </summary>
+        /// <param name="year">L'année des badges à récupérer.</param>
+        /// <returns>Une collection de badges de l'année spécifiée.</returns>
         public IEnumerable<Badge> getBadgesByYear(int year)
         {
             var badges = new List<Badge>();
@@ -115,7 +170,15 @@ namespace TeleBadgeuse.Model
             }
             return badges;
         }
+        #endregion
 
+        #region getBadgesByMonthYear
+        /// <summary>
+        /// Récupère les badges par mois et année.
+        /// </summary>
+        /// <param name="month">Le mois des badges à récupérer.</param>
+        /// <param name="year">L'année des badges à récupérer.</param>
+        /// <returns>Une collection de badges du mois et de l'année spécifiés.</returns>
         public IEnumerable<Badge> getBadgesByMonthYear(int month, int year)
         {
             var badges = new List<Badge>();
@@ -141,7 +204,16 @@ namespace TeleBadgeuse.Model
             }
             return badges;
         }
+        #endregion
 
+        #region getBadgesByDayMonthYear
+        /// <summary>
+        /// Récupère les badges par jour, mois et année.
+        /// </summary>
+        /// <param name="day">Le jour des badges à récupérer.</param>
+        /// <param name="month">Le mois des badges à récupérer.</param>
+        /// <param name="year">L'année des badges à récupérer.</param>
+        /// <returns>Une collection de badges du jour, du mois et de l'année spécifiés.</returns>
         public IEnumerable<Badge> getBadgesByDayMonthYear(int day, int month, int year)
         {
             var badges = new List<Badge>();
@@ -168,7 +240,13 @@ namespace TeleBadgeuse.Model
             }
             return badges;
         }
+        #endregion
 
+        #region UpdateBadge
+        /// <summary>
+        /// Met à jour un badge existant dans la base de données.
+        /// </summary>
+        /// <param name="badge">Le badge à mettre à jour.</param>
         public void UpdateBadge(Badge badge)
         {
             using (var connection = new SQLiteConnection(_connectionString))
@@ -182,7 +260,13 @@ namespace TeleBadgeuse.Model
                 command.ExecuteNonQuery();
             }
         }
+        #endregion
 
+        #region DeleteBadge
+        /// <summary>
+        /// Supprime un badge de la base de données par son identifiant.
+        /// </summary>
+        /// <param name="id">L'identifiant du badge à supprimer.</param>
         public void DeleteBadge(int id)
         {
             using (var connection = new SQLiteConnection(_connectionString))
@@ -194,5 +278,9 @@ namespace TeleBadgeuse.Model
                 command.ExecuteNonQuery();
             }
         }
+        #endregion
+
+        #endregion
     }
+    #endregion
 }
