@@ -289,7 +289,6 @@ namespace TeleBadgeuse
                     if (minute >= 60)
                     {
                         minute -= 60;
-                        heure += 1;
                     }
                     return new DateTime(1, 1, 1, heure, minute, 0).ToString("HH:mm");
                 }
