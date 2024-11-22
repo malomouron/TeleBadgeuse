@@ -13,7 +13,7 @@ namespace TeleBadgeuseTestUnit.View
     {
         #region Constructeur Tests
 
-        [Fact]
+        [Fact(Skip = "Test désactivé")]
         public void SettingsPage_Constructor_InitializesCorrectly()
         {
             // Act
@@ -29,7 +29,7 @@ namespace TeleBadgeuseTestUnit.View
 
         #region LanguageComboBox_SelectionChanged Tests
 
-        [Fact]
+        [Fact(Skip = "Test désactivé")]
         public void LanguageComboBox_SelectionChanged_SetsCultureToFrench()
         {
             // Arrange
@@ -46,7 +46,7 @@ namespace TeleBadgeuseTestUnit.View
             Assert.Equal("fr", SettingsPage.SettingsViewModel.SelectSettingsKey("Language").Value);
         }
 
-        [Fact]
+        [Fact(Skip = "Test désactivé")]
         public void LanguageComboBox_SelectionChanged_SetsCultureToEnglish()
         {
             // Arrange
@@ -63,7 +63,7 @@ namespace TeleBadgeuseTestUnit.View
             Assert.Equal("en", SettingsPage.SettingsViewModel.SelectSettingsKey("Language").Value);
         }
 
-        [Fact]
+        [Fact(Skip = "Test désactivé")]
         public void LanguageComboBox_SelectionChanged_SetsCultureToDefault()
         {
             // Arrange

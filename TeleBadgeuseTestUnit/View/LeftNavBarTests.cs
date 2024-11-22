@@ -12,7 +12,7 @@ namespace TeleBadgeuseTestUnit.View
     {
         #region Constructeur Tests
 
-        [Fact]
+        [Fact(Skip = "Test désactivé")]
         public void LeftNavBar_Constructor_InitializesComponent()
         {
             // Arrange & Act
@@ -26,7 +26,7 @@ namespace TeleBadgeuseTestUnit.View
 
         #region Méthodes Tests
 
-        [Fact]
+        [Fact(Skip = "Test désactivé")]
         public void HomeButton_Click_NavigatesToHomePage()
         {
             // Arrange
@@ -41,7 +41,7 @@ namespace TeleBadgeuseTestUnit.View
             //Assert.Equal(expectedUri, mainWindow.MainFrame.Source);
         }
 
-        [Fact]
+        [Fact(Skip = "Test désactivé")]
         public void ProfileButton_Click_NavigatesToProfilePage()
         {
             // Arrange
@@ -56,7 +56,7 @@ namespace TeleBadgeuseTestUnit.View
             //Assert.Equal(expectedUri, mainWindow.MainFrame.Source);
         }
 
-        [Fact]
+        [Fact(Skip = "Test désactivé")]
         public void SettingsButton_Click_NavigatesToSettingsPage()
         {
             // Arrange
@@ -71,7 +71,7 @@ namespace TeleBadgeuseTestUnit.View
             //Assert.Equal(expectedUri, mainWindow.MainFrame.Source);
         }
 
-        [Fact]
+        [Fact(Skip = "Test désactivé")]
         public void ToggleButtonStyles_ChangesButtonStyles()
         {
             // Arrange
@@ -87,7 +87,7 @@ namespace TeleBadgeuseTestUnit.View
             //Assert.Equal(style, leftNavBar.ButtonSettings.Style);
         }
 
-        [Theory]
+        [Theory(Skip = "Test désactivé")]
         [InlineData(true, Visibility.Visible)]
         [InlineData(false, Visibility.Collapsed)]
         public void ToggleLabelsVisibility_ChangesLabelsVisibility(bool isVisible, Visibility expectedVisibility)

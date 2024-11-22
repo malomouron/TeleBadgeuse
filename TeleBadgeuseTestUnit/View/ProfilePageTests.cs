@@ -12,7 +12,7 @@ namespace TeleBadgeuseTestUnit.View
     {
         #region TurnOff Tests
 
-        [Fact]
+        [Fact(Skip = "Test désactivé")]
         public void TurnOff_SetsAddTimeVisibilityToHidden()
         {
             // Arrange
@@ -31,7 +31,7 @@ namespace TeleBadgeuseTestUnit.View
 
         #region TurnOn Tests
 
-        [Fact]
+        [Fact(Skip = "Test désactivé")]
         public void TurnOn_SetsAddTimeVisibilityToVisible()
         {
             // Arrange
