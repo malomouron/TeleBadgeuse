@@ -4,10 +4,14 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             mc:Ignorable="d">  
+             mc:Ignorable="d">
+    <!-- Conteneur principal -->
     <Grid>
+        <!-- ScrollViewer pour permettre le défilement vertical -->
         <ScrollViewer VerticalScrollBarVisibility="Auto" Background="{StaticResource AccentBrush}">
+            <!-- Pile de boutons -->
             <StackPanel>
+                <!-- Bouton pour la page d'accueil -->
                 <Button x:Name="ButtonHome" Style="{StaticResource ButtonLeftNavBarTiny}" Click="HomeButton_Click">
                     <Button.Content>
                         <StackPanel Orientation="Horizontal">
@@ -16,6 +20,7 @@
                         </StackPanel>
                     </Button.Content>
                 </Button>
+                <!-- Bouton pour la page de profil -->
                 <Button x:Name="ButtonProfil" Style="{StaticResource ButtonLeftNavBarTiny}" Click="ProfileButton_Click">
                     <Button.Content>
                         <StackPanel Orientation="Horizontal">
@@ -24,6 +29,7 @@
                         </StackPanel>
                     </Button.Content>
                 </Button>
+                <!-- Bouton pour la page des paramètres -->
                 <Button x:Name="ButtonSettings" Style="{StaticResource ButtonLeftNavBarTiny}" Click="SettingsButton_Click">
                     <Button.Content>
                         <StackPanel Orientation="Horizontal">
