@@ -10,7 +10,7 @@
         Title="{DynamicResource AppName}" Height="600" Width="800"
         Background="Transparent"
         WindowStyle="None"
-        MinHeight="250" MinWidth="700"
+        MinHeight="600" MinWidth="750"
         AllowsTransparency="True">
     <WindowChrome.WindowChrome>
         <shell:WindowChrome 

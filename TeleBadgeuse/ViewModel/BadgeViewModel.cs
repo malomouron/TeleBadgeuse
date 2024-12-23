@@ -307,6 +307,7 @@ namespace TeleBadgeuse
                     if (minute >= 60)
                     {
                         minute -= 60;
+                        heure++;
                     }
                     if (heure >= 24)
                     {

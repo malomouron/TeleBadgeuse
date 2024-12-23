@@ -2,8 +2,7 @@
 <Page x:Class="TeleBadgeuse.ProfilePage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-      xmlns:webview2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf">
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
     <!-- Ressources de la page -->
     <Page.Resources>
         <ResourceDictionary Source="pack://application:,,,/Ressources/Style.xaml" />
@@ -18,8 +17,10 @@
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="5*"/>
             <ColumnDefinition Width="5*"/>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="0.5*"/>
+            <ColumnDefinition Width="0.5*"/>
+            <ColumnDefinition Width="0.5*"/>
+            <ColumnDefinition Width="0.5*"/>
         </Grid.ColumnDefinitions>
         <!-- Définition des lignes de la grille -->
         <Grid.RowDefinitions>
@@ -50,7 +51,9 @@
             </Border>
             <Button Style="{StaticResource ModifDateRight}" Content="+" Command="{Binding IncrementCommand}"/>
         </StackPanel>
-        
+
+        <Button Style="{StaticResource ButtonShare}"  Click="ButtonShare_Click" Content="{materialDesign:PackIcon Kind=MicrosoftOutlook}" Grid.Column="5" Grid.Row="2" Grid.ColumnSpan="2" Margin="6,0,7,1" Background="{x:Null}" Foreground="{DynamicResource AccentBrush}" BorderBrush="{DynamicResource AccentBrush}" BorderThickness="1,1,1,1" />
+
         <!-- Boutons de vue -->
         <StackPanel Grid.Row="1" Grid.RowSpan="2" Grid.Column="3" Orientation="Vertical" HorizontalAlignment="Right" VerticalAlignment="Center">
             <RadioButton GroupName="View" Style="{StaticResource CustomRadioButtonStyleTop}" Content="{materialDesign:PackIcon Kind=ViewList}" IsChecked="{Binding IsViewListSelected}"/>
@@ -68,7 +71,7 @@
                 <DataGridTextColumn Header="Is Start" Binding="{Binding IsStart}" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
-        
+
         <!-- ListView -->
         <ListView Style="{StaticResource ListView}" Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="6" ItemsSource="{Binding BadgePairs}" Visibility="{Binding IsViewGridSelected, Converter={StaticResource BooleanToVisibilityConverter}}">
             <ListView.Resources>

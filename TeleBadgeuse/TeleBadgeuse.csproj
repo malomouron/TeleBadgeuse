@@ -10,6 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="config.json" />
     <None Remove="Ressources\Icons\IconDark.ico" />
     <None Remove="Ressources\Icons\IconDarkFull.png" />
     <None Remove="Ressources\Icons\IconLight.ico" />
@@ -17,6 +18,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="config.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Ressources\Icons\IconDark.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -94,5 +98,8 @@
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
+
+	
+  <ProjectExtensions><VisualStudio><UserProperties /></VisualStudio></ProjectExtensions>
 
 </Project>
