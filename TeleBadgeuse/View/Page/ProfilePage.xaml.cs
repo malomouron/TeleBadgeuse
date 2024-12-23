@@ -56,7 +56,7 @@ namespace TeleBadgeuse
 
         private void ButtonShare_Click(object sender, RoutedEventArgs e)
         {
-            string file = "config.json";
+            string file = Path.Combine(AppContext.BaseDirectory, "config.json");
             string f =  File.ReadAllText(file);
             Dictionary<string, Dictionary<string, string>> mail = JsonSerializer.Deserialize<Dictionary<string, Dictionary<string, string>>>(f);
 

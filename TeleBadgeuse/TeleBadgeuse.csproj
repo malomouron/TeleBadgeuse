@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <None Remove="config.json" />
+    <None Remove="config.example.json" />
     <None Remove="Ressources\Icons\IconDark.ico" />
     <None Remove="Ressources\Icons\IconDarkFull.png" />
     <None Remove="Ressources\Icons\IconLight.ico" />
@@ -18,7 +19,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="config.json">
+    <Content Include="config.example.json" Condition="!Exists('config.json')">
+      <TargetPath>config.json</TargetPath>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="config.json" Condition="Exists('config.json')">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Ressources\Icons\IconDark.ico">

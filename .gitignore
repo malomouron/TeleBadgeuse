@@ -363,3 +363,14 @@ MigrationBackup/
 FodyWeavers.xsd
 
 .idea
+
+# Local application data
+*.db
+*.db-*
+*.sqlite
+*.sqlite-*
+*.sqlite3
+*.sqlite3-*
+
+# User-specific mail settings
+TeleBadgeuse/config.json
