@@ -72,7 +72,7 @@ namespace TeleBadgeuse.Ressources
         {
             ResourceDictionary dictionary = new ResourceDictionary
             {
-                Source = new Uri($"Ressources/Strings/{_currentCulture}.xaml", UriKind.Relative)
+                Source = new Uri($"pack://application:,,,/TeleBadgeuse;component/Ressources/Strings/{_currentCulture}.xaml", UriKind.Absolute)
             };
             return dictionary;
         }
@@ -87,7 +87,7 @@ namespace TeleBadgeuse.Ressources
         {
             ResourceDictionary dictionary = new ResourceDictionary
             {
-                Source = new Uri($"Ressources/Themes/{_currentTheme}.xaml", UriKind.Relative)
+                Source = new Uri($"pack://application:,,,/TeleBadgeuse;component/Ressources/Themes/{_currentTheme}.xaml", UriKind.Absolute)
             };
             return dictionary;
         }

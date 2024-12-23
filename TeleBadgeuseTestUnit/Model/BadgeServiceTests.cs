@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Data.SQLite;
 using System.IO;
 using System.Linq;
 using TeleBadgeuse.Data;
@@ -12,26 +11,18 @@ namespace TeleBadgeuseTestUnit.Model
     /// <summary>
     /// Tests unitaires pour la classe BadgeService.
     /// </summary>
-    public class BadgeServiceTests : IDisposable
+    public class BadgeServiceTests
     {
+        private readonly string _databaseDirectory;
         private readonly string _connectionString;
         private readonly BadgeService _badgeService;
 
         public BadgeServiceTests()
         {
-            _connectionString = "Data Source=./data.db";
+            _databaseDirectory = Path.Combine(Path.GetTempPath(), $"TeleBadgeuseBadgeServiceTests_{Guid.NewGuid():N}");
+            Directory.CreateDirectory(_databaseDirectory);
+            _connectionString = $"Data Source={Path.Combine(_databaseDirectory, "data.db")};Pooling=False";
             _badgeService = new BadgeService(_connectionString);
-        }
-
-        public void Dispose()
-        {
-            using (var connection = new SQLiteConnection(_connectionString))
-            {
-                connection.Open();
-                var command = connection.CreateCommand();
-                command.CommandText = "DROP TABLE IF EXISTS Badges";
-                command.ExecuteNonQuery();
-            }
         }
 
         #region AddBadge Tests

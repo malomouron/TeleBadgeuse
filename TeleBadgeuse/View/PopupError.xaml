@@ -4,7 +4,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <!-- Ressources de l'utilisateur -->
     <UserControl.Resources>
-        <ResourceDictionary Source="pack://application:,,,/Ressources/Style.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/TeleBadgeuse;component/Ressources/Style.xaml" />
     </UserControl.Resources>
     <!-- Grille principale avec fond semi-transparent -->
     <Grid Background="#80000000">

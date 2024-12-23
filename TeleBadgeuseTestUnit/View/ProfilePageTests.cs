@@ -8,42 +8,56 @@ namespace TeleBadgeuseTestUnit.View
     /// <summary>
     /// Tests unitaires pour la classe ProfilePage.
     /// </summary>
+    [Collection(WpfTestCollection.Name)]
     public class ProfilePageTests
     {
+        private readonly WpfTestHost _wpfTestHost;
+
+        public ProfilePageTests(WpfTestHost wpfTestHost)
+        {
+            _wpfTestHost = wpfTestHost;
+        }
+
         #region TurnOff Tests
 
-        [Fact(Skip = "Test désactivé")]
-        public void TurnOff_SetsAddTimeVisibilityToHidden()
+        [Fact]
+        public void TurnOff_WhenInvoked_SetsAddTimeVisibilityToHidden()
         {
-            // Arrange
-            var profilePage = new ProfilePage();
-            profilePage.GetType().GetProperty("AddTime", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).SetValue(profilePage, new StackPanel { Visibility = Visibility.Visible });
+            _wpfTestHost.Run(() =>
+            {
+                // Arrange
+                var profilePage = new ProfilePage();
+                var addTime = Assert.IsType<StackPanel>(profilePage.FindName("AddTime"));
+                addTime.Visibility = Visibility.Visible;
 
-            // Act
-            profilePage.TurnOff();
+                // Act
+                profilePage.TurnOff();
 
-            // Assert
-            var addTime = (StackPanel)profilePage.GetType().GetProperty("AddTime", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).GetValue(profilePage);
-            Assert.Equal(Visibility.Hidden, addTime.Visibility);
+                // Assert
+                Assert.Equal(Visibility.Hidden, addTime.Visibility);
+            });
         }
 
         #endregion
 
         #region TurnOn Tests
 
-        [Fact(Skip = "Test désactivé")]
-        public void TurnOn_SetsAddTimeVisibilityToVisible()
+        [Fact]
+        public void TurnOn_WhenInvoked_SetsAddTimeVisibilityToVisible()
         {
-            // Arrange
-            var profilePage = new ProfilePage();
-            profilePage.GetType().GetProperty("AddTime", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).SetValue(profilePage, new StackPanel { Visibility = Visibility.Hidden });
+            _wpfTestHost.Run(() =>
+            {
+                // Arrange
+                var profilePage = new ProfilePage();
+                var addTime = Assert.IsType<StackPanel>(profilePage.FindName("AddTime"));
+                addTime.Visibility = Visibility.Hidden;
 
-            // Act
-            profilePage.TurnOn();
+                // Act
+                profilePage.TurnOn();
 
-            // Assert
-            var addTime = (StackPanel)profilePage.GetType().GetProperty("AddTime", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).GetValue(profilePage);
-            Assert.Equal(Visibility.Visible, addTime.Visibility);
+                // Assert
+                Assert.Equal(Visibility.Visible, addTime.Visibility);
+            });
         }
 
         #endregion

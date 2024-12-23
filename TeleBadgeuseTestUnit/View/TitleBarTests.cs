@@ -9,95 +9,117 @@ namespace TeleBadgeuseTestUnit.View
     /// <summary>
     /// Tests unitaires pour la classe TitleBar.
     /// </summary>
+    [Collection(WpfTestCollection.Name)]
     public class TitleBarTests
     {
+        private readonly WpfTestHost _wpfTestHost;
+
+        public TitleBarTests(WpfTestHost wpfTestHost)
+        {
+            _wpfTestHost = wpfTestHost;
+        }
+
         #region Constructeur Tests
 
-        [Fact(Skip = "Test désactivé")]
-        public void TitleBar_Constructor_InitializesDataContext()
+        [Fact]
+        public void TitleBarConstructor_WithDefaultSetup_UsesSettingsViewModelAsDataContext()
         {
-            // Act
-            var titleBar = new TitleBar();
+            _wpfTestHost.Run(() =>
+            {
+                // Arrange
 
-            // Assert
-            Assert.Equal(SettingsPage.SettingsViewModel, titleBar.DataContext);
+                // Act
+                var titleBar = new TitleBar();
+
+                // Assert
+                Assert.Same(SettingsPage.SettingsViewModel, titleBar.DataContext);
+            });
         }
 
         #endregion
 
         #region Méthodes Tests
 
-        [Fact(Skip = "Test désactivé")]
-        public void TitleBar_MouseDown_LeftButton_DragsWindow()
+        [Fact]
+        public void TitleBarMouseDown_WhenDetachedAndLeftButton_DoesNotThrow()
         {
-            // Arrange
-            var titleBar = new TitleBar();
-            var window = new Window { Content = titleBar };
-            window.Show();
-            var mouseButtonEventArgs = new MouseButtonEventArgs(Mouse.PrimaryDevice, 0, MouseButton.Left)
+            _wpfTestHost.Run(() =>
             {
-                RoutedEvent = UIElement.MouseDownEvent
-            };
+                // Arrange
+                var titleBar = new TitleBar();
+                var mouseButtonEventArgs = new MouseButtonEventArgs(Mouse.PrimaryDevice, 0, MouseButton.Left)
+                {
+                    RoutedEvent = UIElement.MouseDownEvent
+                };
 
-            // Act
-            titleBar.RaiseEvent(mouseButtonEventArgs);
+                // Act
+                var exception = Record.Exception(() => titleBar.TitleBar_MouseDown(titleBar, mouseButtonEventArgs));
 
-            // Assert
-            // No exception means the method executed successfully
+                // Assert
+                Assert.Null(exception);
+            });
         }
 
-        [Fact(Skip = "Test désactivé")]
-        public void Minimize_Click_MinimizesWindow()
+        [Fact]
+        public void MinimizeClick_WhenInvoked_SetsWindowStateToMinimized()
         {
-            // Arrange
-            var titleBar = new TitleBar();
-            var window = new Window { Content = titleBar };
-            window.Show();
-            var routedEventArgs = new RoutedEventArgs(Button.ClickEvent);
+            _wpfTestHost.Run(() =>
+            {
+                // Arrange
+                var titleBar = new TitleBar();
+                var window = new Window { Content = titleBar };
+                var routedEventArgs = new RoutedEventArgs(Button.ClickEvent);
 
-            // Act
-            titleBar.Minimize_Click(titleBar, routedEventArgs);
+                // Act
+                titleBar.Minimize_Click(titleBar, routedEventArgs);
 
-            // Assert
-            Assert.Equal(WindowState.Minimized, window.WindowState);
+                // Assert
+                Assert.Equal(WindowState.Minimized, window.WindowState);
+            });
         }
 
-        [Fact(Skip = "Test désactivé")]
-        public void Maximize_Click_TogglesWindowState()
+        [Fact]
+        public void MaximizeClick_WhenInvoked_TogglesWindowState()
         {
-            // Arrange
-            var titleBar = new TitleBar();
-            var window = new Window { Content = titleBar };
-            window.Show();
-            var routedEventArgs = new RoutedEventArgs(Button.ClickEvent);
+            _wpfTestHost.Run(() =>
+            {
+                // Arrange
+                var titleBar = new TitleBar();
+                var window = new Window { Content = titleBar };
+                var routedEventArgs = new RoutedEventArgs(Button.ClickEvent);
 
-            // Act
-            titleBar.Maximize_Click(titleBar, routedEventArgs);
+                // Act
+                titleBar.Maximize_Click(titleBar, routedEventArgs);
 
-            // Assert
-            Assert.Equal(WindowState.Maximized, window.WindowState);
+                // Assert
+                Assert.Equal(WindowState.Maximized, window.WindowState);
 
-            // Act
-            titleBar.Maximize_Click(titleBar, routedEventArgs);
+                // Act
+                titleBar.Maximize_Click(titleBar, routedEventArgs);
 
-            // Assert
-            Assert.Equal(WindowState.Normal, window.WindowState);
+                // Assert
+                Assert.Equal(WindowState.Normal, window.WindowState);
+            });
         }
 
-        [Fact(Skip = "Test désactivé")]
-        public void Close_Click_ClosesWindow()
+        [Fact]
+        public void CloseClick_WhenInvoked_RaisesClosedEvent()
         {
-            // Arrange
-            var titleBar = new TitleBar();
-            var window = new Window { Content = titleBar };
-            window.Show();
-            var routedEventArgs = new RoutedEventArgs(Button.ClickEvent);
+            _wpfTestHost.Run(() =>
+            {
+                // Arrange
+                var titleBar = new TitleBar();
+                var window = new Window { Content = titleBar };
+                var routedEventArgs = new RoutedEventArgs(Button.ClickEvent);
+                var closed = false;
+                window.Closed += (_, _) => closed = true;
 
-            // Act
-            titleBar.Close_Click(titleBar, routedEventArgs);
+                // Act
+                titleBar.Close_Click(titleBar, routedEventArgs);
 
-            // Assert
-            Assert.False(window.IsVisible);
+                // Assert
+                Assert.True(closed);
+            });
         }
 
         #endregion

@@ -4,7 +4,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <!-- Ressources de la page -->
     <Page.Resources>
-        <ResourceDictionary Source="pack://application:,,,/Ressources/Style.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/TeleBadgeuse;component/Ressources/Style.xaml" />
     </Page.Resources>
     <!-- Grille principale -->
     <Grid>

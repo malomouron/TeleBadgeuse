@@ -9,75 +9,99 @@ namespace TeleBadgeuseTestUnit.View
     /// <summary>
     /// Tests unitaires pour la classe SettingsPage.
     /// </summary>
+    [Collection(WpfTestCollection.Name)]
     public class SettingsPageTests
     {
+        private readonly WpfTestHost _wpfTestHost;
+
+        public SettingsPageTests(WpfTestHost wpfTestHost)
+        {
+            _wpfTestHost = wpfTestHost;
+        }
+
         #region Constructeur Tests
 
-        [Fact(Skip = "Test désactivé")]
-        public void SettingsPage_Constructor_InitializesCorrectly()
+        [Fact]
+        public void SettingsPageConstructor_WithDefaultSetup_UsesSettingsViewModelAsDataContext()
         {
-            // Act
-            var settingsPage = new SettingsPage();
+            _wpfTestHost.Run(() =>
+            {
+                // Arrange
 
-            // Assert
-            Assert.NotNull(settingsPage);
-            Assert.NotNull(settingsPage.DataContext);
-            Assert.IsType<SettingsViewModel>(settingsPage.DataContext);
+                // Act
+                var settingsPage = new SettingsPage();
+
+                // Assert
+                Assert.Same(SettingsPage.SettingsViewModel, settingsPage.DataContext);
+                Assert.IsType<SettingsViewModel>(settingsPage.DataContext);
+            });
         }
 
         #endregion
 
         #region LanguageComboBox_SelectionChanged Tests
 
-        [Fact(Skip = "Test désactivé")]
-        public void LanguageComboBox_SelectionChanged_SetsCultureToFrench()
+        [Fact]
+        public void LanguageComboBoxSelectionChanged_WhenFrenchSelected_SavesFrenchCulture()
         {
-            // Arrange
-            var settingsPage = new SettingsPage();
-            var comboBox = new ComboBox();
-            var comboBoxItem = new ComboBoxItem { Content = settingsPage.FindResource("LangFr") };
-            comboBox.Items.Add(comboBoxItem);
-            comboBox.SelectedItem = comboBoxItem;
+            _wpfTestHost.Run(() =>
+            {
+                // Arrange
+                var settingsPage = new SettingsPage();
+                SettingsPage.SettingsViewModel.AddSettingsCommand.Execute(("Language", "fr"));
+                var comboBox = new ComboBox();
+                var comboBoxItem = new ComboBoxItem { Content = settingsPage.FindResource("LangFr") };
+                comboBox.Items.Add(comboBoxItem);
+                comboBox.SelectedItem = comboBoxItem;
 
-            // Act
-            settingsPage.LanguageComboBox_SelectionChanged(comboBox, null);
+                // Act
+                settingsPage.LanguageComboBox_SelectionChanged(comboBox, null);
 
-            // Assert
-            Assert.Equal("fr", SettingsPage.SettingsViewModel.SelectSettingsKey("Language").Value);
+                // Assert
+                Assert.Equal("fr", SettingsPage.SettingsViewModel.SelectSettingsKey("Language").Value);
+            });
         }
 
-        [Fact(Skip = "Test désactivé")]
-        public void LanguageComboBox_SelectionChanged_SetsCultureToEnglish()
+        [Fact]
+        public void LanguageComboBoxSelectionChanged_WhenEnglishSelected_SavesEnglishCulture()
         {
-            // Arrange
-            var settingsPage = new SettingsPage();
-            var comboBox = new ComboBox();
-            var comboBoxItem = new ComboBoxItem { Content = settingsPage.FindResource("LangEn") };
-            comboBox.Items.Add(comboBoxItem);
-            comboBox.SelectedItem = comboBoxItem;
+            _wpfTestHost.Run(() =>
+            {
+                // Arrange
+                var settingsPage = new SettingsPage();
+                SettingsPage.SettingsViewModel.AddSettingsCommand.Execute(("Language", "fr"));
+                var comboBox = new ComboBox();
+                var comboBoxItem = new ComboBoxItem { Content = settingsPage.FindResource("LangEn") };
+                comboBox.Items.Add(comboBoxItem);
+                comboBox.SelectedItem = comboBoxItem;
 
-            // Act
-            settingsPage.LanguageComboBox_SelectionChanged(comboBox, null);
+                // Act
+                settingsPage.LanguageComboBox_SelectionChanged(comboBox, null);
 
-            // Assert
-            Assert.Equal("en", SettingsPage.SettingsViewModel.SelectSettingsKey("Language").Value);
+                // Assert
+                Assert.Equal("en", SettingsPage.SettingsViewModel.SelectSettingsKey("Language").Value);
+            });
         }
 
-        [Fact(Skip = "Test désactivé")]
-        public void LanguageComboBox_SelectionChanged_SetsCultureToDefault()
+        [Fact]
+        public void LanguageComboBoxSelectionChanged_WhenUnknownLanguageSelected_UsesEnglishCulture()
         {
-            // Arrange
-            var settingsPage = new SettingsPage();
-            var comboBox = new ComboBox();
-            var comboBoxItem = new ComboBoxItem { Content = "Unknown" };
-            comboBox.Items.Add(comboBoxItem);
-            comboBox.SelectedItem = comboBoxItem;
+            _wpfTestHost.Run(() =>
+            {
+                // Arrange
+                var settingsPage = new SettingsPage();
+                SettingsPage.SettingsViewModel.AddSettingsCommand.Execute(("Language", "fr"));
+                var comboBox = new ComboBox();
+                var comboBoxItem = new ComboBoxItem { Content = "Unknown" };
+                comboBox.Items.Add(comboBoxItem);
+                comboBox.SelectedItem = comboBoxItem;
 
-            // Act
-            settingsPage.LanguageComboBox_SelectionChanged(comboBox, null);
+                // Act
+                settingsPage.LanguageComboBox_SelectionChanged(comboBox, null);
 
-            // Assert
-            Assert.Equal("en", SettingsPage.SettingsViewModel.SelectSettingsKey("Language").Value);
+                // Assert
+                Assert.Equal("en", SettingsPage.SettingsViewModel.SelectSettingsKey("Language").Value);
+            });
         }
 
         #endregion

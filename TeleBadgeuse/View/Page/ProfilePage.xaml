@@ -5,7 +5,7 @@
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
     <!-- Ressources de la page -->
     <Page.Resources>
-        <ResourceDictionary Source="pack://application:,,,/Ressources/Style.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/TeleBadgeuse;component/Ressources/Style.xaml" />
     </Page.Resources>
     <Grid>
         <Grid.Resources>

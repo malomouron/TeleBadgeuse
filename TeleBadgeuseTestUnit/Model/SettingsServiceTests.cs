@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
+using System.IO;
 using TeleBadgeuse.Data;
 using TeleBadgeuse.Model;
 using Xunit;
@@ -10,26 +11,19 @@ namespace TeleBadgeuseTestUnit.Model
     /// <summary>
     /// Tests unitaires pour la classe SettingsService.
     /// </summary>
-    public class SettingsServiceTests : IDisposable
+    public class SettingsServiceTests
     {
-        private readonly string _connectionString = "Data Source=./data.db";
+        private readonly string _databaseDirectory;
+        private readonly string _connectionString;
         private readonly SettingsService _settingsService;
 
         public SettingsServiceTests()
         {
+            _databaseDirectory = Path.Combine(Path.GetTempPath(), $"TeleBadgeuseSettingsServiceTests_{Guid.NewGuid():N}");
+            Directory.CreateDirectory(_databaseDirectory);
+            _connectionString = $"Data Source={Path.Combine(_databaseDirectory, "data.db")};Pooling=False";
             InitializeDatabase();
             _settingsService = new SettingsService(_connectionString);
-        }
-
-        public void Dispose()
-        {
-            using (var connection = new SQLiteConnection(_connectionString))
-            {
-                connection.Open();
-                var command = connection.CreateCommand();
-                command.CommandText = "DROP TABLE IF EXISTS Settings";
-                command.ExecuteNonQuery();
-            }
         }
 
         public void InitializeDatabase()

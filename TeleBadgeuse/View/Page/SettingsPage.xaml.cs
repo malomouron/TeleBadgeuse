@@ -9,11 +9,11 @@ namespace TeleBadgeuse
     /// </summary>
     public partial class SettingsPage 
     {
-        private static SettingsViewModel _settingsViewModel = new SettingsViewModel(new SettingsService(MainWindow.dbPath));
+        private static SettingsViewModel? _settingsViewModel;
         
         public static SettingsViewModel SettingsViewModel
         {
-            get => _settingsViewModel;
+            get => _settingsViewModel ??= new SettingsViewModel(new SettingsService(MainWindow.dbPath));
             set => _settingsViewModel = value;
         }
         #region Constructeur
